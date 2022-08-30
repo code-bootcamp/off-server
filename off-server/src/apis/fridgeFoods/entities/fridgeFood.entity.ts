@@ -1,8 +1,11 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Category } from 'src/apis/category/entities/category.entity';
+import { Freezer } from 'src/apis/freezers/entities/freezer.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -34,11 +37,11 @@ export class FridgeFood {
   @Field(() => Int)
   alarm: number;
 
-  //   @ManyToOne(() => Freezer)
-  //   @Field(() => Freezer)
-  //   freezer: Freezer;
+  @ManyToOne(() => Freezer)
+  @Field(() => Freezer)
+  freezer: Freezer;
 
-  //   @OneToOne(() => Category)
-  //   @Field(() => Category)
-  //   category: Category;
+  @OneToOne(() => Category)
+  @Field(() => Category)
+  category: Category;
 }

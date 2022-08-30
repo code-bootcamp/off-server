@@ -1,11 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { UsersImage } from 'src/apis/usersImages/entities/usersImage.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -30,7 +25,7 @@ export class User {
   @Field(() => String)
   nickname: string;
 
-  //   @OneToOne(() => Image)
-  //   @Field(() => Image)
-  //   image:Image;
+  @OneToOne(() => UsersImage)
+  @Field(() => UsersImage)
+  usersimage: UsersImage;
 }

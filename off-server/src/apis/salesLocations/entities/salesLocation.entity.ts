@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Board } from 'src/apis/boards/entities/board.entity';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -16,10 +17,9 @@ export class SalesLocation {
   @Field(() => String)
   detailAddress: string;
 
-  //   @Column()
-  //   @OneToOne(() => Board)
-  //   @Field(() => String)
-  //   board: Board;
+  @OneToOne(() => Board)
+  @Field(() => Board)
+  board: Board;
 
   @Column()
   @Field(() => String)

@@ -1,4 +1,5 @@
 import { Field, Float, ObjectType } from '@nestjs/graphql';
+import { FridgeFood } from 'src/apis/fridgeFoods/entities/fridgeFood.entity';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
@@ -16,7 +17,7 @@ export class FridgeCardLocation {
   @Field(() => Float)
   detination: number;
 
-  // @OneToOne(() => FridgeFood)
-  // @Field(() => FridgeFood)
-  // freezerFood: FridgeFood;
+  @OneToOne(() => FridgeFood)
+  @Field(() => FridgeFood)
+  fridgeFood: FridgeFood;
 }

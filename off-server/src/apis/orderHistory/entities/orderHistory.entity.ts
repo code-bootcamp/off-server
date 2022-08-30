@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Board } from 'src/apis/boards/entities/board.entity';
 import { User } from 'src/apis/users/entities/user.entity';
 import {
   Column,
@@ -27,7 +28,7 @@ export class OrderHistory {
   @Field(() => User)
   user: User;
 
-  //   @ManyToOne(() => Board)
-  //   @Field(() => Board)
-  //   board: Board;
+  @ManyToOne(() => Board)
+  @Field(() => Board)
+  board: Board;
 }
