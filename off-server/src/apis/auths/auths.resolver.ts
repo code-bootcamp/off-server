@@ -24,7 +24,7 @@ export class AuthsResolver {
     @Args('password') password: string,
     @Context() context: IContext,
   ) {
-    const user = await this.userService.findOne({ id: email });
+    const user = await this.userService.findOne({ email});
     if (!user)
       throw new UnprocessableEntityException(
         '이메일이나 비밀번호를 확인해주세요',
