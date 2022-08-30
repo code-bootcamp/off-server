@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { User } from 'src/apis/users/entities/user.entity';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
@@ -16,7 +17,7 @@ export class Token {
   @Field(() => Boolean)
   isAuth: boolean;
 
-  // @OneToOne(() => User)
-  // @Field(() => User)
-  // user: User
+  @OneToOne(() => User)
+  @Field(() => User)
+  user: User;
 }

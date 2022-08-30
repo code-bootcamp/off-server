@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Category } from 'src/apis/category/entities/category.entity';
+import { User } from 'src/apis/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -32,11 +33,11 @@ export class Board {
   @Field()
   regDate: Date;
 
-  // @ManyToOne(() => User)
-  // @Field(() => User)
-  // userId: string;
+  @ManyToOne(() => User)
+  @Field(() => User)
+  user: User;
 
   @OneToOne(() => Category)
   @Field(() => Category)
-  categoryId: string;
+  category: Category;
 }
