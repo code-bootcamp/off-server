@@ -15,6 +15,7 @@ type User {
   password: String!
   nickname: String!
   usersimage: UsersImage!
+  phone: String!
 }
 
 type Category {
@@ -51,6 +52,11 @@ type FreezerFood {
   category: Category!
 }
 
+type Fridge {
+  id: String!
+  user: User!
+}
+
 type FridgeFood {
   id: String!
   name: String!
@@ -58,7 +64,7 @@ type FridgeFood {
   expDate: DateTime!
   regDate: DateTime!
   alarm: Int!
-  freezer: Freezer!
+  fridge: Fridge!
   category: Category!
 }
 
