@@ -18,8 +18,8 @@ import { OrderHistoryModule } from './apis/orderHistory/orderHistory.module';
 import { PointsModule } from './apis/points/points.module';
 import { SalesHistoryModule } from './apis/salesHistory/salesHistory.module';
 import { SalesLocationsModule } from './apis/salesLocations/salesLocationsModule';
-import { UsersModule } from './apis/users/usersModule';
-import { UsersImagesModule } from './apis/usersImages/usersImagesModule';
+import { UsersModule } from './apis/users/users.module';
+import { UsersImagesModule } from './apis/usersImages/usersImages.module';
 
 @Module({
   imports: [

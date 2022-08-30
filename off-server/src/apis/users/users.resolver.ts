@@ -3,6 +3,7 @@ import { CreateUserInput } from './dto/createUser.input';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from './users.service';
+import { updateUserInput } from './dto/updateUser.input';
 
 @Resolver()
 export class UserResolver {
@@ -14,8 +15,13 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  fetchUser(@Args('id') id: string) {
-    return this.usersService.findOne({ id });
+  fetchUser(@Args('email') email: string) {
+    return this.usersService.findOne({ email });
+  }
+
+  @Query(() => [User])
+  fetchUserWithDeleted() {
+    return this.usersService.findUsersWithDeleted();
   }
 
   @Mutation(() => User)
@@ -25,5 +31,25 @@ export class UserResolver {
       hashePassword,
       ...CreateUserInput,
     });
+  }
+
+  @Mutation(() => User)
+  async updateUser(
+    @Args('email') email: string,
+    @Args('updateUserInput') updateUserInput: updateUserInput,
+  ) {
+    return this.usersService.update({ updateUserInput, email });
+  }
+
+  @Mutation(() => Boolean)
+  deleteUser(
+    @Args('email') email: string, //
+  ) {
+    return this.usersService.delete({ email });
+  }
+
+  @Mutation(() => Boolean)
+  restoreUser(@Args('email') email: string) {
+    return this.usersService.restore({ email });
   }
 }
