@@ -17,6 +17,7 @@ type User {
   usersimage: UsersImage!
   phone: String!
   regDate: DateTime!
+  deletedAt: String!
 }
 
 """
@@ -72,12 +73,16 @@ type FridgeFood {
 type Query {
   sayHello: String!
   fetchUsers: [User!]!
-  fetchUser(id: String!): User!
+  fetchUser(email: String!): User!
+  fetchUserWithDeleted: [User!]!
 }
 
 type Mutation {
   login(email: String!, password: String!): String!
   createUser(createUserInput: CreateUserInput!): User!
+  updateUser(email: String!, updateUserInput: updateUserInput!): User!
+  deleteUser(email: String!): Boolean!
+  restoreUser(email: String!): Boolean!
 }
 
 input CreateUserInput {
@@ -86,4 +91,12 @@ input CreateUserInput {
   password: String!
   phone: String!
   nickname: String!
+}
+
+input updateUserInput {
+  email: String
+  name: String
+  password: String
+  phone: String
+  nickname: String
 }

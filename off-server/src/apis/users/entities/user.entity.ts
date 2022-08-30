@@ -4,6 +4,7 @@ import { UsersImage } from 'src/apis/usersImages/entities/usersImage.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
@@ -45,4 +46,8 @@ export class User {
   @CreateDateColumn()
   @Field(() => Date)
   regDate: Date;
+
+  @DeleteDateColumn()
+  @Field(() => String)
+  deletedAt: Date;
 }
