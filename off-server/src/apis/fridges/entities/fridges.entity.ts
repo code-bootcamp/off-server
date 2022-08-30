@@ -1,7 +1,13 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { FridgeFood } from 'src/apis/fridgeFoods/entities/fridgeFood.entity';
 import { User } from 'src/apis/users/entities/user.entity';
-import { Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
