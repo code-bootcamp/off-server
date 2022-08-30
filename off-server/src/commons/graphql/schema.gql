@@ -16,7 +16,13 @@ type User {
   nickname: String!
   usersimage: UsersImage!
   phone: String!
+  regDate: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Category {
   id: String!
@@ -32,11 +38,6 @@ type Board {
   user: User!
   category: Category!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type Freezer {
   user: User!
@@ -70,4 +71,18 @@ type FridgeFood {
 
 type Query {
   sayHello: String!
+  fetchUsers: [User!]!
+  fetchUser(id: String!): User!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+  phone: String!
+  nickname: String!
 }
