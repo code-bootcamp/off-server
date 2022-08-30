@@ -17,9 +17,8 @@ export class SalesLocation {
   @Field(() => String)
   detailAddress: string;
 
-  @Column()
   @OneToOne(() => Board)
-  @Field(() => String)
+  @Field(() => Board)
   board: Board;
 
   @Column()

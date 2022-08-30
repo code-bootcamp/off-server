@@ -3,12 +3,46 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthsModule } from './apis/auths/auths.module';
+import { BoardsModule } from './apis/boards/boards.module';
+import { BoardsImagesModule } from './apis/boardsImages/boardsImages.module';
+import { CategoryModule } from './apis/category/category.module';
+import { ChatingModule } from './apis/chating/chating.module';
+import { FreezerCardLocationsModule } from './apis/freezerCardLocations/freezerCardLocations.module';
+import { FreezerFoodsModule } from './apis/freezerFoods/freezerFoods.module';
+import { FreezersModule } from './apis/freezers/freezers.module';
+import { FridgeCardLocationsModule } from './apis/fridgeCardLocations/fridgeCardLocations.module';
+import { FridgeFoodsModule } from './apis/fridgeFoods/fridgeFoods.module';
+import { FridgesModule } from './apis/fridges/fridges.module';
+import { OrderHistoryModule } from './apis/orderHistory/orderHistory.module';
+import { PointsModule } from './apis/points/points.module';
+import { SalesHistoryModule } from './apis/salesHistory/salesHistory.module';
+import { SalesLocationsModule } from './apis/salesLocations/salesLocationsModule';
+import { UsersModule } from './apis/users/usersModule';
+import { UsersImagesModule } from './apis/usersImages/usersImagesModule';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    AuthsModule,
+    BoardsModule,
+    BoardsImagesModule,
+    CategoryModule,
+    ChatingModule,
+    FreezerCardLocationsModule,
+    FreezerFoodsModule,
+    FreezersModule,
+    FridgeCardLocationsModule,
+    FridgeFoodsModule,
+    FridgesModule,
+    OrderHistoryModule,
+    PointsModule,
+    SalesHistoryModule,
+    SalesLocationsModule,
+    UsersModule,
+    UsersImagesModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/commons/graphql/schema.gql',

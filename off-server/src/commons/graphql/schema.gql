@@ -1,0 +1,67 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UsersImage {
+  id: String!
+  url: String!
+  user: User!
+}
+
+type User {
+  id: String!
+  name: String!
+  email: String!
+  password: String!
+  nickname: String!
+  usersimage: UsersImage!
+}
+
+type Category {
+  id: String!
+  name: String!
+}
+
+type Board {
+  id: String!
+  title: String!
+  contents: String!
+  expDate: DateTime!
+  regDate: DateTime!
+  user: User!
+  category: Category!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Freezer {
+  user: User!
+}
+
+type FreezerFood {
+  id: String!
+  name: String!
+  price: Int!
+  expDate: DateTime!
+  regDate: DateTime!
+  freezer: Freezer!
+  category: Category!
+}
+
+type FridgeFood {
+  id: String!
+  name: String!
+  price: Int!
+  expDate: DateTime!
+  regDate: DateTime!
+  alarm: Int!
+  freezer: Freezer!
+  category: Category!
+}
+
+type Query {
+  sayHello: String!
+}
