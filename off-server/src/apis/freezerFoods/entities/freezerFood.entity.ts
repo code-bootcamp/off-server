@@ -5,6 +5,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryColumn,
@@ -37,6 +38,7 @@ export class FreezerFood {
   @Field(() => Freezer)
   freezer: Freezer;
 
+  @JoinColumn()
   @OneToOne(() => Category)
   @Field(() => Category)
   category: Category;
