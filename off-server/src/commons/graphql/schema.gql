@@ -38,6 +38,7 @@ type Board {
   regDate: DateTime!
   user: User!
   category: Category!
+  deletedAt: String!
 }
 
 type Freezer {
@@ -71,7 +72,6 @@ type FridgeFood {
 }
 
 type Query {
-  sayHello: String!
   fetchUsers: [User!]!
   fetchUser(email: String!): User!
   fetchUserWithDeleted: [User!]!
@@ -79,10 +79,19 @@ type Query {
 
 type Mutation {
   login(email: String!, password: String!): String!
+  createBoard(createBoardInput: CreateBoardInput!): Board!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(email: String!, updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!
   restoreUser(email: String!): Boolean!
+}
+
+input CreateBoardInput {
+  title: String!
+  contents: String!
+  categoryId: String!
+  price: Int!
+  expDate: DateTime!
 }
 
 input CreateUserInput {

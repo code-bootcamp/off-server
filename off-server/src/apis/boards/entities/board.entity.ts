@@ -4,6 +4,7 @@ import { User } from 'src/apis/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -42,4 +43,8 @@ export class Board {
   @OneToOne(() => Category)
   @Field(() => Category)
   category: Category;
+
+  @DeleteDateColumn()
+  @Field(() => String)
+  deletedAt: Date;
 }
