@@ -36,4 +36,24 @@ export class BoardsService {
     });
     return result;
   }
+
+  async update({ updateBoardInput, userId, boardId }) {
+    const myboard = await this.boardRepository.findOne({
+      where: { id: userId },
+    });
+    const result = this.boardRepository.save({
+      ...myboard,
+      id: boardId,
+      ...updateBoardInput,
+    });
+    return result;
+  }
+
+  async delete({ id, userId }) {
+    const myboard = await this.boardRepository.findOne(userId);
+    const result = await this.boardRepository.softDelete({
+      id: id,
+    });
+    return result;
+  }
 }
