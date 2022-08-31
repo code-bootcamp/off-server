@@ -8,13 +8,13 @@ import {
   JoinColumn,
   ManyToOne,
   OneToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 @ObjectType()
 export class FreezerFood {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   @Field(() => String)
   id: string;
 

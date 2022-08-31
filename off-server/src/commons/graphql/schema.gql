@@ -79,6 +79,7 @@ type Query {
 
 type Mutation {
   login(email: String!, password: String!): String!
+  createCategory(name: String!): Category!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(email: String!, updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!
