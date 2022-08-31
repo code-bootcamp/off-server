@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
@@ -39,8 +39,12 @@ export class BoardsService {
 
   async update({ updateBoardInput, userId, boardId }) {
     const myboard = await this.boardRepository.findOne({
-      where: { id: userId },
+      where: { id: boardId },
+      relations: ['user'],
     });
+    if (userId !== myboard.user.id) {
+      throw new UnprocessableEntityException('수정 못해~');
+    }
     const result = this.boardRepository.save({
       ...myboard,
       id: boardId,
@@ -49,11 +53,16 @@ export class BoardsService {
     return result;
   }
 
-  async delete({ id, userId }) {
-    const myboard = await this.boardRepository.findOne(userId);
-    const result = await this.boardRepository.softDelete({
-      id: id,
+  async delete({ boardId, userId }) {
+    const myboard = await this.boardRepository.findOne({
+      where: { id: boardId },
+      relations: ['user'],
     });
-    return result;
+    if (userId !== myboard.user.id) {
+      console.log('asdasdasdasdasdasda', userId, myboard.user.id);
+      throw new UnprocessableEntityException('삭제 못해유~!');
+    }
+    const result = await this.boardRepository.softDelete({ id: boardId });
+    return result.affected ? true : false;
   }
 }

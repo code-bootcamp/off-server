@@ -51,8 +51,13 @@ export class BoardsResolver {
 
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Boolean)
-  async deleteBoard(@Context() context: IContext, @Args('id') id: string) {
+  async deleteBoard(
+    @Context() context: IContext,
+    @Args('boardId') boardId: string,
+  ) {
+    // console.log(boardId);
+    // console.log(context.req.user.id);
     const userId = context.req.user.id;
-    return await this.boardsService.delete({ id, userId });
+    return await this.boardsService.delete({ boardId, userId });
   }
 }
