@@ -1,5 +1,7 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { IUser } from 'src/commons/type/context';
+import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
+import { IContext, IUser } from 'src/commons/type/context';
 import { BoardsService } from './boards.service';
 import { CreateBoardInput } from './dto/createBoard.input';
 import { Board } from './entities/board.entity';
@@ -8,14 +10,18 @@ import { Board } from './entities/board.entity';
 export class BoardsResolver {
   constructor(private readonly boardsService: BoardsService) {}
 
+  // @Query()
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Board)
   async createBoard(
-    @Context() iUser: IUser,
+    @Context() context: IContext,
     @Args('createBoardInput') createBoardInput: CreateBoardInput,
   ) {
+    console.log('@@@@@@@@@@@', context.req.user.id);
+    const userId = context.req.user.id;
     return this.boardsService.create({
       createBoardInput,
-      email: iUser.user.email,
+      userId,
     });
   }
 }

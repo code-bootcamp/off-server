@@ -3,7 +3,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER, Inject, UnauthorizedException } from '@nestjs/common';
 
-export class JwtAccessStrategy extends PassportStrategy(Strategy, 'myGuard') {
+export class JwtAccessStrategy extends PassportStrategy(Strategy, 'access') {
   constructor(
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,

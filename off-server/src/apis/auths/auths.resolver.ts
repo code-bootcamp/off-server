@@ -1,14 +1,9 @@
-import {
-  CACHE_MANAGER,
-  Inject,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { UnprocessableEntityException } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { IContext } from 'src/commons/type/context';
 import { AuthsService } from './auths.service';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
-import { Cache } from 'cache-manager';
 
 @Resolver()
 export class AuthsResolver {
@@ -24,7 +19,7 @@ export class AuthsResolver {
     @Args('password') password: string,
     @Context() context: IContext,
   ) {
-    const user = await this.userService.findOne({ email});
+    const user = await this.userService.findOne({ email });
     if (!user)
       throw new UnprocessableEntityException(
         '이메일이나 비밀번호를 확인해주세요',

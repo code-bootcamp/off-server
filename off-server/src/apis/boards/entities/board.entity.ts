@@ -10,12 +10,13 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 @ObjectType()
 export class Board {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   @Field()
   id: string;
 
@@ -39,8 +40,7 @@ export class Board {
   @Field(() => User)
   user: User;
 
-  @JoinColumn()
-  @OneToOne(() => Category)
+  @ManyToOne(() => Category)
   @Field(() => Category)
   category: Category;
 

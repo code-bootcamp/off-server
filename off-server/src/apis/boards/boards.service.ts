@@ -13,12 +13,9 @@ export class BoardsService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async create({ createBoardInput, email }) {
-    const findUser = await this.userRepository.findOne({
-      where: { email: email },
-    });
+  async create({ createBoardInput, userId }) {
     const result = await this.boardRepository.save({
-      user: findUser.email,
+      user: userId,
       ...createBoardInput,
     });
     return result;
