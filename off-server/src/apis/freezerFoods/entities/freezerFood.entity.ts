@@ -38,8 +38,7 @@ export class FreezerFood {
   @Field(() => Freezer)
   freezer: Freezer;
 
-  @JoinColumn()
-  @OneToOne(() => Category)
+  @ManyToOne(() => Category)
   @Field(() => Category)
   category: Category;
 }

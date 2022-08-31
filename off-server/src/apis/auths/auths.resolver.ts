@@ -1,6 +1,4 @@
 import {
-  CACHE_MANAGER,
-  Inject,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
@@ -8,7 +6,6 @@ import { IContext } from 'src/commons/type/context';
 import { AuthsService } from './auths.service';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
-import { Cache } from 'cache-manager';
 
 @Resolver()
 export class AuthsResolver {
