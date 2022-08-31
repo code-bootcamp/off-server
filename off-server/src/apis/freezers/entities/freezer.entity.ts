@@ -1,11 +1,11 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { User } from 'src/apis/users/entities/user.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
 export class Freezer {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   @Column(() => String)
   id: string;
 
