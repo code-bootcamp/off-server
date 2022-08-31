@@ -10,14 +10,22 @@ import { Board } from './entities/board.entity';
 export class BoardsResolver {
   constructor(private readonly boardsService: BoardsService) {}
 
-  // @Query()
+  @Query(() => [Board])
+  fetchBoards() {
+    return this.boardsService.findAll();
+  }
+
+  @Query(() => Board)
+  fetchBoard(@Args('id') id: string) {
+    return this.boardsService.findOne({ id });
+  }
+
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Board)
   async createBoard(
     @Context() context: IContext,
     @Args('createBoardInput') createBoardInput: CreateBoardInput,
   ) {
-    console.log('@@@@@@@@@@@', context.req.user.id);
     const userId = context.req.user.id;
     return this.boardsService.create({
       createBoardInput,

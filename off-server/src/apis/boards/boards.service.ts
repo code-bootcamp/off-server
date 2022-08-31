@@ -13,10 +13,26 @@ export class BoardsService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  async findAll() {
+    return await this.boardRepository.find({
+      relations: ['category', 'user'],
+    });
+  }
+
+  async findOne({ id }) {
+    return await this.boardRepository.findOne({
+      where: { id: id },
+      relations: ['category', 'user'],
+    });
+  }
+
   async create({ createBoardInput, userId }) {
+    const { categoryId, ...rest } = createBoardInput;
+
     const result = await this.boardRepository.save({
       user: userId,
-      ...createBoardInput,
+      ...rest,
+      category: categoryId,
     });
     return result;
   }
