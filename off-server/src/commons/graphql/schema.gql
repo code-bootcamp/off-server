@@ -81,10 +81,7 @@ type Mutation {
   login(email: String!, password: String!): String!
   createBoard(createBoardInput: CreateBoardInput!): Board!
   createCategory(name: String!): Category!
-  createFridgeFood(
-    fridgeFoodInput: CreateFridgeFoodInput!
-    userId: String!
-  ): FridgeFood!
+  createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!): FridgeFood!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(email: String!, updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!
@@ -98,6 +95,7 @@ input CreateBoardInput {
   price: Int!
   expDate: DateTime!
 }
+
 input CreateFridgeFoodInput {
   name: String!
   price: Int!
