@@ -80,10 +80,19 @@ type Query {
 type Mutation {
   login(email: String!, password: String!): String!
   createCategory(name: String!): Category!
+  createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!, userId: String!): FridgeFood!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(email: String!, updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!
   restoreUser(email: String!): Boolean!
+}
+
+input CreateFridgeFoodInput {
+  name: String!
+  price: Int!
+  expDate: DateTime!
+  alarm: Int!
+  category: String!
 }
 
 input CreateUserInput {
