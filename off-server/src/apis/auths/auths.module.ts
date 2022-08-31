@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { CacheModule, Module } from '@nestjs/common';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtAccessStrategy } from 'src/commons/auth/jwt-access.strategy';
+import { JwtRefreshStrategy } from 'src/commons/auth/jwt-refresh.strategy';
 import { FridgesService } from '../fridges/fridges.service';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
@@ -10,12 +11,18 @@ import { AuthsService } from './auths.service';
 import { Token } from './entities/token.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Token, User])],
+  imports: [
+    JwtModule.register({}),
+    CacheModule.register(),
+    TypeOrmModule.forFeature([Token, User]),
+  ],
   providers: [
     AuthsResolver, //
     AuthsService,
-    JwtService,
     UsersService,
+    JwtAccessStrategy,
+    JwtRefreshStrategy,
+    JwtService,
   ],
 })
 export class AuthsModule {}
