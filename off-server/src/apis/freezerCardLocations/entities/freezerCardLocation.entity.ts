@@ -1,11 +1,11 @@
 import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { FreezerFood } from 'src/apis/freezerFoods/entities/freezerFood.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
 export class FreezerCardLocation {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   @Field(() => String)
   id: string;
 
