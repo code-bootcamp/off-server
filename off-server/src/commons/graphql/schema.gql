@@ -72,6 +72,8 @@ type FridgeFood {
 }
 
 type Query {
+  fetchBoards: [Board!]!
+  fetchBoard(id: String!): Board!
   fetchUsers: [User!]!
   fetchUser(email: String!): User!
   fetchUserWithDeleted: [User!]!

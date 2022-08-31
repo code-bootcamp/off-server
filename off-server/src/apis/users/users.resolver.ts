@@ -12,8 +12,8 @@ export class UserResolver {
   constructor(
     private readonly usersService: UsersService,
     private readonly fridgesService: FridgesService,
-    private readonly freezerService: FreezerService
-    ) {}
+    private readonly freezerService: FreezerService,
+  ) {}
 
   @Query(() => [User])
   fetchUsers() {
@@ -38,11 +38,11 @@ export class UserResolver {
       ...CreateUserInput,
     });
 
-    const userId = user.id
-    this.fridgesService.create({userId})
-    this.freezerService.create({userId})
+    const userId = user.id;
+    this.fridgesService.create({ userId });
+    this.freezerService.create({ userId });
 
-    return user
+    return user;
   }
 
   @Mutation(() => User)
