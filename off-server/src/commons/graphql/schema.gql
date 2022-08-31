@@ -74,6 +74,7 @@ type FridgeFood {
 type Query {
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
+  fetchFridgeFoods(fridgeId: String!): [FridgeFood!]!
   fetchUsers: [User!]!
   fetchUser(email: String!): User!
   fetchUserWithDeleted: [User!]!
@@ -86,7 +87,8 @@ type Mutation {
   deleteBoard(id: String!): Boolean!
   createCategory(name: String!): Category!
   createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!): FridgeFood!
-  deleteFood(foodId: String!, fridgeId: String!): Boolean!
+  updateFridgeFoods(fridgeFoodId: String!, updateFridgeFoodInput: UpdateFridgeFoodInput!): String!
+  deleteFridgeFood(foodId: String!, fridgeId: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(email: String!, updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!
@@ -110,6 +112,14 @@ input UpdateBoardInput {
 }
 
 input CreateFridgeFoodInput {
+  name: String!
+  price: Int!
+  expDate: DateTime!
+  alarm: Int!
+  category: String!
+}
+
+input UpdateFridgeFoodInput {
   name: String!
   price: Int!
   expDate: DateTime!
