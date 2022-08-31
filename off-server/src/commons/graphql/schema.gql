@@ -84,6 +84,7 @@ type Mutation {
   createBoard(createBoardInput: CreateBoardInput!): Board!
   createCategory(name: String!): Category!
   createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!): FridgeFood!
+  deleteFood(foodId: String!, fridgeId: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(email: String!, updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!

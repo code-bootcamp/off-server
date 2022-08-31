@@ -5,11 +5,13 @@ import { Fridge } from 'src/apis/fridges/entities/fridges.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -46,4 +48,10 @@ export class FridgeFood {
   @ManyToOne(() => Category)
   @Field(() => Category)
   category: Category;
+
+  @UpdateDateColumn()
+  updatedAt: Date
+
+  @DeleteDateColumn()
+  isDeletedAt: Date
 }
