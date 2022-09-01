@@ -30,11 +30,20 @@ type Category {
   name: String!
 }
 
+type SalesLocations {
+  id: String!
+  address: String!
+  detailAddress: String!
+}
+
 type Board {
   id: String!
   title: String!
   contents: String!
   expDate: DateTime!
+  price: Int!
+  isSoldout: Boolean!
+  salesLocation: SalesLocations!
   regDate: DateTime!
   user: User!
   category: Category!
@@ -110,6 +119,12 @@ input CreateBoardInput {
   categoryId: String!
   price: Int!
   expDate: DateTime!
+  salesLocations: SalesLocationsInput!
+}
+
+input SalesLocationsInput {
+  address: String!
+  detailAddress: String!
 }
 
 input UpdateBoardInput {
@@ -118,6 +133,7 @@ input UpdateBoardInput {
   categoryId: String
   price: Int
   expDate: DateTime
+  salesLocations: SalesLocationsInput
 }
 
 input CreateFridgeFoodInput {

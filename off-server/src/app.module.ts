@@ -17,7 +17,6 @@ import { FridgesModule } from './apis/fridges/fridges.module';
 import { OrderHistoryModule } from './apis/orderHistory/orderHistory.module';
 import { PointsModule } from './apis/points/points.module';
 import { SalesHistoryModule } from './apis/salesHistory/salesHistory.module';
-import { SalesLocationsModule } from './apis/salesLocations/salesLocationsModule';
 import { UsersModule } from './apis/users/users.module';
 import { UsersImagesModule } from './apis/usersImages/usersImages.module';
 import { IamportModule } from './apis/iamport/iamport.module';
@@ -42,7 +41,6 @@ import { PaymentModule } from './apis/payment/payment.module';
     OrderHistoryModule,
     PointsModule,
     SalesHistoryModule,
-    SalesLocationsModule,
     UsersModule,
     UsersImagesModule,
     IamportModule,
