@@ -2,6 +2,7 @@ import { Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { Args } from "@nestjs/graphql";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { Fridge } from "../fridges/entities/fridges.entity";
 import { FridgesService } from "../fridges/fridges.service";
 import { FridgeFood } from "./entities/fridgeFood.entity";
 
@@ -10,12 +11,16 @@ export class FridgeFoodsService {
   constructor(
     @InjectRepository(FridgeFood)
     private readonly fridgeFoodRepository: Repository<FridgeFood>,
-    private readonly fridgesService: FridgesService
+    private readonly fridgesService: FridgesService,
+    @InjectRepository(Fridge)
+    private readonly fridge: Repository<Fridge>
   ){}
 
-  async findAll({fridgeId}){
+  async findAll({userId}){
+    const fridge = await this.fridge.findOne({where: {user: {id: userId}}})
+    
     const result = await this.fridgeFoodRepository.find({
-      where: {fridge: {id: fridgeId}},
+      where: {fridge: {id: fridge.id}},
       relations: ['fridge', 'category']
     })
 
