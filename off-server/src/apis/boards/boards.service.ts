@@ -37,7 +37,7 @@ export class BoardsService {
       ...salesLocations,
     });
 
-    const result2 = await this.boardRepository.save({
+    const saveBoard = await this.boardRepository.save({
       ...rest,
       user: userId,
       salesLocation: result,
@@ -48,10 +48,10 @@ export class BoardsService {
       const urls = url[i];
       await this.boardsImageRepository.save({
         url: urls,
-        board: result2.id,
+        board: saveBoard.id,
       });
     }
-    return result2;
+    return saveBoard;
   }
 
   async update({ updateBoardInput, userId, boardId }) {
