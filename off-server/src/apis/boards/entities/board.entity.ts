@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { BoardsImage } from 'src/apis/boardsImages/entities/boardsImage.entity';
 import { Category } from 'src/apis/category/entities/category.entity';
 import { SalesLocations } from 'src/apis/salesLocations/entities/salesLocation.entity';
 import { User } from 'src/apis/users/entities/user.entity';
@@ -9,6 +10,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,

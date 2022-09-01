@@ -5,7 +5,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthsModule } from './apis/auths/auths.module';
 import { BoardsModule } from './apis/boards/boards.module';
-import { BoardsImagesModule } from './apis/boardsImages/boardsImages.module';
 import { CategoryModule } from './apis/category/category.module';
 import { ChatingModule } from './apis/chating/chating.module';
 import { FreezerCardLocationsModule } from './apis/freezerCardLocations/freezerCardLocations.module';
@@ -19,6 +18,7 @@ import { PointsModule } from './apis/points/points.module';
 import { SalesHistoryModule } from './apis/salesHistory/salesHistory.module';
 import { UsersModule } from './apis/users/users.module';
 import { UsersImagesModule } from './apis/usersImages/usersImages.module';
+import { FilesModule } from './apis/file/files.module';
 
 @Module({
   imports: [
@@ -27,7 +27,7 @@ import { UsersImagesModule } from './apis/usersImages/usersImages.module';
     }),
     AuthsModule,
     BoardsModule,
-    BoardsImagesModule,
+    FilesModule,
     CategoryModule,
     ChatingModule,
     FreezerCardLocationsModule,

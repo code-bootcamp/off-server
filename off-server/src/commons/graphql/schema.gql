@@ -94,6 +94,7 @@ type Mutation {
   createBoard(createBoardInput: CreateBoardInput!): Board!
   updateBoard(boardId: String!, updateBoardInput: UpdateBoardInput!): Board!
   deleteBoard(boardId: String!): Boolean!
+  uploadFile(files: [Upload!]!): [String!]!
   createCategory(name: String!): Category!
   createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!): FridgeFood!
   updateFridgeFoods(fridgeFoodId: String!, updateFridgeFoodInput: UpdateFridgeFoodInput!): String!
@@ -111,6 +112,7 @@ input CreateBoardInput {
   price: Int!
   expDate: DateTime!
   salesLocations: SalesLocationsInput!
+  url: [String!]!
 }
 
 input SalesLocationsInput {
@@ -125,7 +127,11 @@ input UpdateBoardInput {
   price: Int
   expDate: DateTime
   salesLocations: SalesLocationsInput
+  url: [String!]
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input CreateFridgeFoodInput {
   name: String!
