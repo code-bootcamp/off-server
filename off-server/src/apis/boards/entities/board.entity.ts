@@ -37,6 +37,10 @@ export class Board {
   @Field(() => Int)
   price: number;
 
+  @Column({ default: false })
+  @Field(() => Boolean)
+  isSoldout: boolean;
+
   @JoinColumn()
   @OneToOne(() => SalesLocations)
   @Field(() => SalesLocations)
