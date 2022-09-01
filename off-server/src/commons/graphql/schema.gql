@@ -30,11 +30,20 @@ type Category {
   name: String!
 }
 
+type SalesLocation {
+  id: String!
+  address: String!
+  detailAddress: String!
+  zipcode: String!
+}
+
 type Board {
   id: String!
   title: String!
   contents: String!
   expDate: DateTime!
+  price: Int!
+  salesLocation: SalesLocation!
   regDate: DateTime!
   user: User!
   category: Category!

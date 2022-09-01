@@ -1,5 +1,6 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Category } from 'src/apis/category/entities/category.entity';
+import { SalesLocation } from 'src/apis/salesLocations/entities/salesLocation.entity';
 import { User } from 'src/apis/users/entities/user.entity';
 import {
   Column,
@@ -31,6 +32,15 @@ export class Board {
   @Column()
   @Field(() => Date)
   expDate: Date;
+
+  @Column()
+  @Field(() => Int)
+  price: number;
+
+  @JoinColumn()
+  @OneToOne(() => SalesLocation)
+  @Field(() => SalesLocation)
+  salesLocation: SalesLocation;
 
   @CreateDateColumn()
   @Field()
