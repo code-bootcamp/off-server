@@ -20,6 +20,7 @@ import { SalesHistoryModule } from './apis/salesHistory/salesHistory.module';
 import { SalesLocationsModule } from './apis/salesLocations/salesLocationsModule';
 import { UsersModule } from './apis/users/users.module';
 import { UsersImagesModule } from './apis/usersImages/usersImages.module';
+import { IamportModule } from './apis/iamport/iamport.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { UsersImagesModule } from './apis/usersImages/usersImages.module';
     SalesLocationsModule,
     UsersModule,
     UsersImagesModule,
+    IamportModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/commons/graphql/schema.gql',
