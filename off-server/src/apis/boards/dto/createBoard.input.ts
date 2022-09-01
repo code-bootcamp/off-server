@@ -1,6 +1,6 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
+import { BoardsImage } from 'src/apis/boardsImages/entities/boardsImage.entity';
 import { SalesLocationsInput } from 'src/apis/salesLocations/dto/salesLocation.input';
-import { User } from 'src/apis/users/entities/user.entity';
 
 @InputType()
 export class CreateBoardInput {
@@ -21,6 +21,9 @@ export class CreateBoardInput {
 
   @Field(() => SalesLocationsInput)
   salesLocations: SalesLocationsInput;
+
+  @Field(() => [String])
+  url: string[];
 
   // 제목 내용 가격 유통기한
   // 회원아이디 카레고리아이디
