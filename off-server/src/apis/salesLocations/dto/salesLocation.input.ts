@@ -1,9 +1,9 @@
 import { InputType, OmitType } from '@nestjs/graphql';
-import { SalesLocation } from '../entities/salesLocation.entity';
+import { SalesLocations } from '../entities/salesLocation.entity';
 
 @InputType()
-export class SalesLocationInput extends OmitType(
-  SalesLocation,
+export class SalesLocationsInput extends OmitType(
+  SalesLocations,
   ['id'],
   InputType,
 ) {}

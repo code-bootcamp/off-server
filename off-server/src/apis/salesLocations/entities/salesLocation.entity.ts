@@ -10,7 +10,7 @@ import {
 
 @Entity()
 @ObjectType()
-export class SalesLocation {
+export class SalesLocations {
   @PrimaryGeneratedColumn('uuid')
   @Field(() => String)
   id: string;
@@ -22,8 +22,4 @@ export class SalesLocation {
   @Column()
   @Field(() => String)
   detailAddress: string;
-
-  @Column()
-  @Field(() => String)
-  zipcode: number;
 }

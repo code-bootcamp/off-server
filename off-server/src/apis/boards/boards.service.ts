@@ -1,7 +1,7 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../users/entities/user.entity';
+import { SalesLocations } from '../salesLocations/entities/salesLocation.entity';
 import { Board } from './entities/board.entity';
 
 @Injectable()
@@ -9,32 +9,41 @@ export class BoardsService {
   constructor(
     @InjectRepository(Board)
     private readonly boardRepository: Repository<Board>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(SalesLocations)
+    private readonly salesLocationRepository: Repository<SalesLocations>,
   ) {}
 
   async findAll() {
     return await this.boardRepository.find({
-      relations: ['category', 'user'],
+      relations: ['category', 'user', 'salesLocation'],
     });
   }
 
   async findOne({ id }) {
     return await this.boardRepository.findOne({
       where: { id: id },
-      relations: ['category', 'user'],
+      relations: ['category', 'user', 'salesLocation'],
     });
   }
 
   async create({ createBoardInput, userId }) {
-    const { categoryId, ...rest } = createBoardInput;
+    const { categoryId, salesLocations, ...rest } = createBoardInput;
 
-    const result = await this.boardRepository.save({
-      user: userId,
+    const result = await this.salesLocationRepository.save({
+      ...salesLocations,
+    });
+
+    console.log(result.id, 'ssss');
+
+    const result2 = await this.boardRepository.save({
       ...rest,
+      user: userId,
+      salesLocation: result,
       category: categoryId,
     });
-    return result;
+
+    // console.log('asdasdasd', salesLocations);
+    return result2;
   }
 
   async update({ updateBoardInput, userId, boardId }) {
