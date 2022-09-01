@@ -42,6 +42,7 @@ type Board {
   contents: String!
   expDate: DateTime!
   price: Int!
+  isSoldout: Boolean!
   salesLocation: SalesLocations!
   regDate: DateTime!
   user: User!
