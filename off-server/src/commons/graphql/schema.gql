@@ -80,6 +80,14 @@ type FridgeFood {
   category: Category!
 }
 
+type Payment {
+  id: String!
+  impUid: String!
+  amount: Int!
+  merchantUid: String!
+  user: User!
+}
+
 type Query {
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
@@ -102,6 +110,7 @@ type Mutation {
   updateUser(email: String!, updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!
   restoreUser(email: String!): Boolean!
+  pointCharge(impUid: String!, merchantUid: String!, amount: Int!): Payment!
 }
 
 input CreateBoardInput {
