@@ -18,9 +18,10 @@ export class FridgeFoodsResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [FridgeFood])
   async fetchFridgeFoods(
-    @Args('fridgeId') fridgeId: string, //
+    @Context() context: IContext, //
   ){
-    return await this.fridgeFoodsService.findAll({fridgeId}) 
+    const userId = context.req.user.id
+    return await this.fridgeFoodsService.findAll({userId}) 
   }
 
   // 냉장고에 음식 등록하기
