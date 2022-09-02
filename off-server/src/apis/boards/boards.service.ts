@@ -55,7 +55,7 @@ export class BoardsService {
     return saveBoard;
   }
 
-  async update({ updateBoardInput, userId, boardId }) {
+  async update({ updateBoardInput, userId, boardId, status }) {
     const myboard = await this.boardRepository.findOne({
       where: { id: boardId },
       relations: ['user'],
@@ -67,6 +67,7 @@ export class BoardsService {
       ...myboard,
       id: boardId,
       ...updateBoardInput,
+      status,
     });
     return result;
   }
