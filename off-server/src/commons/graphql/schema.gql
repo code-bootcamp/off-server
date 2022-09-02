@@ -118,6 +118,7 @@ type Mutation {
   deleteUser(email: String!): Boolean!
   restoreUser(email: String!): Boolean!
   pointCharge(impUid: String!, merchantUid: String!, amount: Int!): Payment!
+  buyItem(boardId: String!, price: Int!): String!
 }
 
 input CreateBoardInput {

@@ -63,7 +63,16 @@ export class BoardsService {
     if (userId !== myboard.user.id) {
       throw new UnprocessableEntityException('권한이 없습니다.');
     }
-    const result = this.boardRepository.save({
+
+    let result;
+    if (!updateBoardInput) {
+      result = this.boardRepository.save({
+        ...myboard,
+        id: boardId,
+        status
+      })
+    }
+    result = this.boardRepository.save({
       ...myboard,
       id: boardId,
       ...updateBoardInput,
