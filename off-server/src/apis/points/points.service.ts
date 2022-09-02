@@ -26,6 +26,7 @@ export class PointsService {
     await queryRunner.connect();
     await queryRunner.startTransaction('SERIALIZABLE');
     try{
+      console.log(status)
       // 기존 유저 포인트 찾기
       const user = await queryRunner.manager.findOne(
         Point, { 

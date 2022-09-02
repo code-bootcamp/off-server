@@ -129,7 +129,6 @@ input CreateBoardInput {
   expDate: DateTime!
   salesLocations: SalesLocationsInput!
   url: [String!]!
-  status: String!
 }
 
 input SalesLocationsInput {

@@ -10,8 +10,8 @@ export class SalesHistoryService {
     private readonly salesHistoryRepository: Repository<SalesHistory>
   ){}
 
-  create({userId, boardId, price}){
-    this.salesHistoryRepository.create({
+  async create({userId, boardId, price}){
+    await this.salesHistoryRepository.save({
       user: userId,
       board: boardId,
       price

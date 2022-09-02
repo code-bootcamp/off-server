@@ -10,8 +10,8 @@ export class OrderHistoryService {
     private readonly orderHistoryRepository: Repository<OrderHistory>
   ){}
 
-  create({userId, boardId, price}){
-    this.orderHistoryRepository.create({
+  async create({userId, boardId, price}){
+    await this.orderHistoryRepository.save({
       user: userId,
       board: boardId,
       price

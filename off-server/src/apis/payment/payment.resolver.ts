@@ -32,5 +32,7 @@ export class PaymentResolver{
   ) {
     const userId = context.req.user.id
     this.paymentService.buyItem({boardId, price, userId})
+
+    return '구매완료'
   }
 }
