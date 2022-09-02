@@ -3,11 +3,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, Repository } from "typeorm";
 import { BoardsService } from "../boards/boards.service";
 import { UpdateBoardInput } from "../boards/dto/updateBoard.input";
-import { Board } from "../boards/entities/board.entity";
+import { Board, Board_STATUS_ENUM } from "../boards/entities/board.entity";
 import { IamportService } from "../iamport/iamport.service";
 import { OrderHistory } from "../orderHistory/entities/orderHistory.entity";
+import { OrderHistoryService } from "../orderHistory/orderHistory.service";
 import { PointsService } from "../points/points.service";
 import { SalesHistory } from "../salesHistory/entities/salesHistory.entity";
+import { SalesHistoryService } from "../salesHistory/salesHistory.service";
 import { Payment, POINT_TRANSACTION_STATUS_ENUM } from "./entities/payment.entity";
 
 @Injectable()
@@ -19,10 +21,9 @@ export class PaymentService{
     private readonly dataSource: DataSource,
     private readonly iamportService: IamportService,
     private readonly boardsService: BoardsService, 
-    @InjectRepository(SalesHistory)
-    private readonly salesHistoryRepository: Repository<SalesHistory>,
-    @InjectRepository(OrderHistory)
-    private readonly orderHistoryRepository: Repository<OrderHistory>,
+    private readonly orderHistoryService: OrderHistoryService,
+    private readonly salesHistoryService: SalesHistoryService
+
   ){}
   
   // transaction
@@ -65,30 +66,25 @@ export class PaymentService{
     await queryRunner.connect();
     await queryRunner.startTransaction('SERIALIZABLE');
     try {
-      // 상품 isSoldout true update
-      // 상품 lock 걸기
       const board = await queryRunner.manager.findOne(Board, {
         where: {id: boardId}, 
         lock: {mode: 'pessimistic_write'}
       })
 
-      const updateBoardInput = new UpdateBoardInput()
-      this.boardsService.update({userId: board.user.id, updateBoardInput, boardId})
+      let updateBoardInput = new UpdateBoardInput()
+      updateBoardInput = {...board}
+      const status = Board_STATUS_ENUM.SOLDOUT
+      // this.boardsService.update({
+      //   userId: board.user.id,  
+      //   boardId,
+      //   updateBoardInput,
+      //   status
+      // })
 
-      // 내 구매 리스트에 추가하기
-      this.orderHistoryRepository.create({
-        board: boardId,
-        price,
-        user: userId
-      })
+      this.orderHistoryService.create({userId, boardId, price})
 
       // 판매자 판매 리스트에 추가하기
-      this.salesHistoryRepository.create({
-        board: boardId,
-        price,
-        user: userId
-      })
-
+      this.salesHistoryService.create({userId, boardId, price})
       // 나의 포인트 감소
       await this.pointsService.createPointFindSave({userId, amount: price, status: "minus", impUid: "false"})
       // 판매자에게 포인트 주기
