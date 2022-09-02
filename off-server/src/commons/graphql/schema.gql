@@ -115,7 +115,6 @@ input CreateBoardInput {
   title: String!
   contents: String!
   categoryId: String!
-  price: Int!
   expDate: DateTime!
   salesLocations: SalesLocationsInput!
   url: [String!]!
@@ -130,7 +129,6 @@ input UpdateBoardInput {
   title: String
   contents: String
   categoryId: String
-  price: Int
   expDate: DateTime
   salesLocations: SalesLocationsInput
   url: [String!]

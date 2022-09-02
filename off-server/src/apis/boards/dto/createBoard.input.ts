@@ -13,9 +13,6 @@ export class CreateBoardInput {
   @Field(() => String)
   categoryId: string;
 
-  @Field(() => Int)
-  price: number;
-
   @Field(() => Date)
   expDate: Date;
 
