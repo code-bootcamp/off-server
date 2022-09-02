@@ -55,8 +55,6 @@ export class BoardsResolver {
     @Context() context: IContext,
     @Args('boardId') boardId: string,
   ) {
-    // console.log(boardId);
-    // console.log(context.req.user.id);
     const userId = context.req.user.id;
     return await this.boardsService.delete({ boardId, userId });
   }
