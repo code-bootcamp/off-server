@@ -44,10 +44,6 @@ export class Board {
   @Field(() => Date)
   expDate: Date;
 
-  @Column()
-  @Field(() => Int)
-  price: number;
-
   @Column({ type: 'enum', enum: Board_STATUS_ENUM })
   @Field(() => Board_STATUS_ENUM)
   status: string;
