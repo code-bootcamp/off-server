@@ -4,7 +4,8 @@ import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
 import { IContext, IUser } from 'src/commons/type/context';
 import { BoardsService } from './boards.service';
 import { CreateBoardInput } from './dto/createBoard.input';
-import { Board } from './entities/board.entity';
+import { UpdateBoardInput } from './dto/updateBoard.input';
+import { Board, Board_STATUS_ENUM } from './entities/board.entity';
 
 @Resolver()
 export class BoardsResolver {
@@ -31,5 +32,31 @@ export class BoardsResolver {
       createBoardInput,
       userId,
     });
+  }
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Board)
+  async updateBoard(
+    @Context() context: IContext,
+    @Args('boardId') boardId: string,
+    @Args('updateBoardInput') updateBoardInput: UpdateBoardInput,
+  ) {
+    const userId = context.req.user.id;
+    const status = Board_STATUS_ENUM.SALE;
+    return await this.boardsService.update({
+      updateBoardInput,
+      userId,
+      boardId,
+      status,
+    });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Boolean)
+  async deleteBoard(
+    @Context() context: IContext,
+    @Args('boardId') boardId: string,
+  ) {
+    const userId = context.req.user.id;
+    return await this.boardsService.delete({ boardId, userId });
   }
 }
