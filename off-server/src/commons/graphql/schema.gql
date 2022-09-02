@@ -42,12 +42,18 @@ type Board {
   contents: String!
   expDate: DateTime!
   price: Int!
-  isSoldout: Boolean!
+  status: BOARD_STATUS_ENUM!
   salesLocation: SalesLocations!
   regDate: DateTime!
   user: User!
   category: Category!
   deletedAt: String!
+}
+
+enum BOARD_STATUS_ENUM {
+  SALE
+  SOLDOUT
+  RESERVATION
 }
 
 type Freezer {
@@ -100,8 +106,6 @@ type Query {
 type Mutation {
   login(email: String!, password: String!): String!
   createBoard(createBoardInput: CreateBoardInput!): Board!
-  updateBoard(boardId: String!, updateBoardInput: UpdateBoardInput!): Board!
-  deleteBoard(boardId: String!): Boolean!
   uploadFile(files: [Upload!]!): [String!]!
   createCategory(name: String!): Category!
   createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!): FridgeFood!
@@ -127,16 +131,6 @@ input CreateBoardInput {
 input SalesLocationsInput {
   address: String!
   detailAddress: String!
-}
-
-input UpdateBoardInput {
-  title: String
-  contents: String
-  categoryId: String
-  price: Int
-  expDate: DateTime
-  salesLocations: SalesLocationsInput
-  url: [String!]
 }
 
 """The `Upload` scalar type represents a file upload."""
