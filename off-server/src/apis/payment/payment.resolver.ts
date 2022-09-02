@@ -22,4 +22,15 @@ export class PaymentResolver{
     const userId = context.req.user.id
     return await this.paymentService.createPoint({ userId, impUid, amount, merchantUid })
   }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => String)
+  async buyItem(
+    @Args('boardId') boardId: string,
+    @Args({name: 'price', type: () => Int}) price: number,
+    @Context() context: IContext
+  ) {
+    const userId = context.req.user.id
+    this.paymentService.buyItem({boardId, price, userId})
+  }
 }

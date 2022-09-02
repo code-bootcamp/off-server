@@ -1,9 +1,11 @@
 import { Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, Repository } from "typeorm";
+import { BoardsService } from "../boards/boards.service";
 import { IamportService } from "../iamport/iamport.service";
-import { Point } from "../points/entities/point.entity";
+import { OrderHistory } from "../orderHistory/entities/orderHistory.entity";
 import { PointsService } from "../points/points.service";
+import { SalesHistory } from "../salesHistory/entities/salesHistory.entity";
 import { Payment, POINT_TRANSACTION_STATUS_ENUM } from "./entities/payment.entity";
 
 @Injectable()
@@ -13,9 +15,12 @@ export class PaymentService{
     private readonly paymentRepository: Repository<Payment>,
     private readonly pointsService: PointsService,
     private readonly dataSource: DataSource,
-    @InjectRepository(Point)
-    private readonly pointRepository: Repository<Point>,
-    private readonly iamportService: IamportService
+    private readonly iamportService: IamportService,
+    private readonly boardsService: BoardsService, 
+    @InjectRepository(SalesHistory)
+    private readonly salesHistoryRepository: Repository<SalesHistory>,
+    @InjectRepository(OrderHistory)
+    private readonly orderHistoryRepository: Repository<OrderHistory>,
   ){}
   
   // transaction
@@ -33,34 +38,10 @@ export class PaymentService{
       })
       
       await queryRunner.manager.save(paymentTransaction)
-
-      // 기존 유저 포인트 찾기
-      const user = await queryRunner.manager.findOne(
-        Point, { 
-          where: { user: { id: userId } },
-          lock: { mode: 'pessimistic_write'} 
-        },
-      )
-
-      let updatePoint: Point;
-      if (!user) {
-        updatePoint = this.pointRepository.create({
-          user: userId,
-          point: amount
-        })
-      } else {
-        updatePoint = this.pointRepository.create({
-          ...user,
-          id: user.id,
-          point: user.point + amount
-        })
-      }
-
-      
-
-      await queryRunner.manager.save(updatePoint)
+     
       await queryRunner.commitTransaction();
-
+     
+      await this.pointsService.createPointFindSave({userId, amount, status: "plus", impUid} )
       return paymentTransaction
 
     } catch(error) {
@@ -75,5 +56,50 @@ export class PaymentService{
       await queryRunner.release();
     }
   }
+
+
+  async buyItem({boardId, price, userId}){
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction('SERIALIZABLE');
+    try {
+      // 상품 isSoldout true update
+      // 상품 lock 걸기
+
+
+      // const updateBoardInput = new UpdateBoardInput()
+      // updateBoardInput.
+      // this.boardsService.update({})
+
+      // 내 구매 리스트에 추가하기
+      this.orderHistoryRepository.create({
+        board: boardId,
+        price,
+        user: userId
+      })
+
+      // 판매자 판매 리스트에 추가하기
+      this.salesHistoryRepository.create({
+        board: boardId,
+        price,
+        user: userId
+      })
+
+      // 나의 포인트 감소
+      await this.pointsService.createPointFindSave({userId, amount: price, status: "minus", impUid: "false"})
+      // 판매자에게 포인트 주기
+      const userBoard = await this.boardsService.findOne({id: boardId})
+      await this.pointsService.createPointFindSave({userId: userBoard.user.id, amount: price, status: "plus", impUid: "false"})
+
+      await queryRunner.commitTransaction();
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
+
+  }
+
+  
 
 }
