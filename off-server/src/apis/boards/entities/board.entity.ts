@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { BoardsImage } from 'src/apis/boardsImages/entities/boardsImage.entity';
 import { Category } from 'src/apis/category/entities/category.entity';
 import { SalesLocations } from 'src/apis/salesLocations/entities/salesLocation.entity';
@@ -16,6 +16,15 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+export enum Board_STATUS_ENUM {
+  SALE = 'SALE',
+  SOLDOUT = 'SOLDOUT',
+  RESERVATION = 'RESERVATION',
+}
+
+registerEnumType(Board_STATUS_ENUM, {
+  name: 'BOARD_STATUS_ENUM',
+});
 @Entity()
 @ObjectType()
 export class Board {
@@ -39,9 +48,9 @@ export class Board {
   @Field(() => Int)
   price: number;
 
-  @Column({ default: false })
-  @Field(() => Boolean)
-  isSoldout: boolean;
+  @Column({ type: 'enum', enum: Board_STATUS_ENUM })
+  @Field(() => Board_STATUS_ENUM)
+  status: string;
 
   @JoinColumn()
   @OneToOne(() => SalesLocations)
