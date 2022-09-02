@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BoardsImage } from '../boardsImages/entities/boardsImage.entity';
 import { SalesLocations } from '../salesLocations/entities/salesLocation.entity';
-import { Board } from './entities/board.entity';
+import { Board, Board_STATUS_ENUM } from './entities/board.entity';
 
 @Injectable()
 export class BoardsService {
@@ -35,6 +35,7 @@ export class BoardsService {
 
     const result = await this.salesLocationRepository.save({
       ...salesLocations,
+      status: Board_STATUS_ENUM.SALE,
     });
 
     const saveBoard = await this.boardRepository.save({
@@ -60,7 +61,7 @@ export class BoardsService {
       relations: ['user'],
     });
     if (userId !== myboard.user.id) {
-      throw new UnprocessableEntityException('수정 못해~');
+      throw new UnprocessableEntityException('권한이 없습니다.');
     }
     const result = this.boardRepository.save({
       ...myboard,
@@ -76,8 +77,7 @@ export class BoardsService {
       relations: ['user'],
     });
     if (userId !== myboard.user.id) {
-      console.log('asdasdasdasdasdasda', userId, myboard.user.id);
-      throw new UnprocessableEntityException('삭제 못해유~!');
+      throw new UnprocessableEntityException('권한이 없습니다.');
     }
     const result = await this.boardRepository.softDelete({ id: boardId });
     return result.affected ? true : false;
