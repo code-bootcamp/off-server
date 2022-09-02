@@ -2,6 +2,8 @@ import { Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, Repository } from "typeorm";
 import { BoardsService } from "../boards/boards.service";
+import { UpdateBoardInput } from "../boards/dto/updateBoard.input";
+import { Board } from "../boards/entities/board.entity";
 import { IamportService } from "../iamport/iamport.service";
 import { OrderHistory } from "../orderHistory/entities/orderHistory.entity";
 import { PointsService } from "../points/points.service";
@@ -65,11 +67,13 @@ export class PaymentService{
     try {
       // 상품 isSoldout true update
       // 상품 lock 걸기
+      const board = await queryRunner.manager.findOne(Board, {
+        where: {id: boardId}, 
+        lock: {mode: 'pessimistic_write'}
+      })
 
-
-      // const updateBoardInput = new UpdateBoardInput()
-      // updateBoardInput.
-      // this.boardsService.update({})
+      const updateBoardInput = new UpdateBoardInput()
+      this.boardsService.update({userId: board.user.id, updateBoardInput, boardId})
 
       // 내 구매 리스트에 추가하기
       this.orderHistoryRepository.create({

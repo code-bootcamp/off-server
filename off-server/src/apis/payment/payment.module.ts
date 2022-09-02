@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { BoardsService } from "../boards/boards.service";
 import { Board } from "../boards/entities/board.entity";
+import { BoardsImage } from "../boardsImages/entities/boardsImage.entity";
 import { IamportService } from "../iamport/iamport.service";
 import { OrderHistory } from "../orderHistory/entities/orderHistory.entity";
 import { Point } from "../points/entities/point.entity";
@@ -23,7 +24,8 @@ import { PaymentService } from "./payment.service";
       Board,
       SalesHistory,
       OrderHistory,
-      SalesLocations
+      SalesLocations,
+      BoardsImage
     ]),
     HttpModule
   ],
