@@ -1,6 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Category } from 'src/apis/category/entities/category.entity';
-import { Freezer } from 'src/apis/freezers/entities/freezer.entity';
 import { Fridge } from 'src/apis/fridges/entities/fridges.entity';
 import {
   Column,
@@ -50,8 +49,8 @@ export class FridgeFood {
   category: Category;
 
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt: Date;
 
   @DeleteDateColumn()
-  isDeletedAt: Date
+  isDeletedAt: Date;
 }

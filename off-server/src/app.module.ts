@@ -7,20 +7,14 @@ import { AuthsModule } from './apis/auths/auths.module';
 import { BoardsModule } from './apis/boards/boards.module';
 import { CategoryModule } from './apis/category/category.module';
 import { ChatingModule } from './apis/chating/chating.module';
-import { FreezerCardLocationsModule } from './apis/freezerCardLocations/freezerCardLocations.module';
-import { FreezerFoodsModule } from './apis/freezerFoods/freezerFoods.module';
-import { FreezersModule } from './apis/freezers/freezers.module';
 import { FridgeCardLocationsModule } from './apis/fridgeCardLocations/fridgeCardLocations.module';
 import { FridgeFoodsModule } from './apis/fridgeFoods/fridgeFoods.module';
 import { FridgesModule } from './apis/fridges/fridges.module';
 import { OrderHistoryModule } from './apis/orderHistory/orderHistory.module';
-import { PointsModule } from './apis/points/points.module';
 import { SalesHistoryModule } from './apis/salesHistory/salesHistory.module';
 import { UsersModule } from './apis/users/users.module';
 import { UsersImagesModule } from './apis/usersImages/usersImages.module';
 import { FilesModule } from './apis/file/files.module';
-import { IamportModule } from './apis/iamport/iamport.module';
-import { PaymentModule } from './apis/payment/payment.module';
 
 @Module({
   imports: [
@@ -32,19 +26,14 @@ import { PaymentModule } from './apis/payment/payment.module';
     FilesModule,
     CategoryModule,
     ChatingModule,
-    FreezerCardLocationsModule,
-    FreezerFoodsModule,
-    FreezersModule,
     FridgeCardLocationsModule,
     FridgeFoodsModule,
     FridgesModule,
     OrderHistoryModule,
-    PointsModule,
     SalesHistoryModule,
     UsersModule,
     UsersImagesModule,
-    IamportModule,
-    PaymentModule,
+
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'src/commons/graphql/schema.gql',
