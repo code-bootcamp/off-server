@@ -41,7 +41,6 @@ type Board {
   title: String!
   contents: String!
   expDate: DateTime!
-  price: Int!
   status: BOARD_STATUS_ENUM!
   salesLocation: SalesLocations!
   regDate: DateTime!
@@ -72,20 +71,6 @@ type FridgeFood {
   category: Category!
 }
 
-type Freezer {
-  user: User!
-}
-
-type FreezerFood {
-  id: String!
-  name: String!
-  price: Int!
-  expDate: DateTime!
-  regDate: DateTime!
-  freezer: Freezer!
-  category: Category!
-}
-
 type Query {
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
@@ -97,6 +82,7 @@ type Query {
 
 type Mutation {
   login(email: String!, password: String!): String!
+  logout: String!
   createBoard(createBoardInput: CreateBoardInput!): Board!
   updateBoard(boardId: String!, updateBoardInput: UpdateBoardInput!): Board!
   deleteBoard(boardId: String!): Boolean!
