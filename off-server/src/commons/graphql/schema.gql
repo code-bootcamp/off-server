@@ -92,6 +92,8 @@ type Mutation {
   updateFridgeFoods(fridgeFoodId: String!, updateFridgeFoodInput: UpdateFridgeFoodInput!): String!
   deleteFridgeFood(foodId: String!, fridgeId: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
+  getToken(phone: String!): String!
+  checkValidToken(phone: String!, token: String!): String!
   updateUser(email: String!, updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!
   restoreUser(email: String!): Boolean!
