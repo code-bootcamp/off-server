@@ -42,6 +42,19 @@ export class UserResolver {
     return user;
   }
 
+  @Mutation(() => String)
+  async getToken(@Args('phone') phone: string) {
+    await this.usersService.checkPhone(phone);
+    return await this.usersService.sendTokenToSMS({ phone });
+  }
+  @Mutation(() => String)
+  async checkValidToken(
+    @Args('phone') phone: string,
+    @Args('token') token: string,
+  ) {
+    return await this.usersService.tokenCheck({ phone, token });
+  }
+
   @Mutation(() => User)
   async updateUser(
     @Args('email') email: string,
