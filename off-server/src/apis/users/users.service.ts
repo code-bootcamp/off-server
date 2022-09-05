@@ -82,7 +82,7 @@ export class UsersService {
     }
   }
 
-  async update({ email, updateUserInput }) {
+  async update({ hashePassword: password, email, updateUserInput }) {
     const myuser = await this.userRepository.findOne({
       where: { email: email },
     });
@@ -90,6 +90,7 @@ export class UsersService {
       ...myuser,
       email: email,
       ...updateUserInput,
+      password,
     });
     return result;
   }
