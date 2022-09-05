@@ -60,7 +60,8 @@ export class UserResolver {
     @Args('email') email: string,
     @Args('updateUserInput') updateUserInput: updateUserInput,
   ) {
-    return this.usersService.update({ updateUserInput, email });
+    const hashePassword = await bcrypt.hash(updateUserInput.password, 10);
+    return this.usersService.update({ updateUserInput, email, hashePassword });
   }
 
   @Mutation(() => Boolean)
