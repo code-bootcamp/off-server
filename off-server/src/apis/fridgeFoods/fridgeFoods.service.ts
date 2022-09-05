@@ -16,39 +16,41 @@ export class FridgeFoodsService {
     private readonly fridge: Repository<Fridge>
   ){}
 
-  async findAll({userId}){
+  async findAll({userId, page}){
     const fridge = await this.fridge.findOne({where: {user: {id: userId}}})
-    
+    console.log("find", fridge)
     const result = await this.fridgeFoodRepository.find({
       where: {fridge: {id: fridge.id}},
+      // skip: (page - 1) * 5,
+      // take: 5,
       relations: ['fridge', 'category']
     })
 
     return result
   }
 
-  async createFood({fridgeFoodInput, userId}){
+  async createFood({fridgeFoodInput, userId, status}){
     // user의 냉장고 번호 찾기
     const myFridge = await this.fridgesService.findOne(userId)
-
+    console.log("food Create", myFridge)
     return await this.fridgeFoodRepository.save({
       fridge: myFridge.id,
+      status,
       ...fridgeFoodInput
     })
   }
 
-  async updateFood({updateFridgeFoodInput, userId, fridgeFoodId}){
+  async updateFood({updateFridgeFoodInput, userId, fridgeFoodId, status}){
     const myFood = await this.fridgeFoodRepository.findOne({where: {id: fridgeFoodId}})
 
     const result = await this.fridgeFoodRepository.save({
       ...myFood,
+      status,
       id: fridgeFoodId,
       ...updateFridgeFoodInput
     })
 
-    console.log(result)
     return result;
-
   }
 
   async deleteFood({fridgeId, foodId, userId}){
