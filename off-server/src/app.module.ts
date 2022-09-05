@@ -40,6 +40,10 @@ import * as redisStore from 'cache-manager-redis-store';
       driver: ApolloDriver,
       autoSchemaFile: 'src/commons/graphql/schema.gql',
       context: ({ req, res }) => ({ req, res }),
+      cors: {
+        origin: 'http://freshfridge.shop:3000',
+        credentials: true,
+      }
     }),
     TypeOrmModule.forRoot({
       type: process.env.DATABASE_TYPE as 'mysql',
