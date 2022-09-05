@@ -23,8 +23,8 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async findOne({ id }) {
-    return await this.userRepository.findOne({ where: { id } });
+  async findOne({ email }) {
+    return await this.userRepository.findOne({ where: { email } });
   }
 
   async findUsersWithDeleted() {
