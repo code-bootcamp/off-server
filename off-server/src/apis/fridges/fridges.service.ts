@@ -11,7 +11,10 @@ export class FridgesService {
   ){}
 
   async findOne({userId}){
-    return await this.fridgeRepository.findOne({where: {user: userId}})
+    return await this.fridgeRepository.findOne({
+      where: {user: userId},
+      relations: ['user']
+    })
   }
 
   async create({userId}){
