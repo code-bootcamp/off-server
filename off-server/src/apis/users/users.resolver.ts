@@ -1,10 +1,13 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateUserInput } from './dto/createUser.input';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from './users.service';
 import { updateUserInput } from './dto/updateUser.input';
 import { FridgesService } from '../fridges/fridges.service';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthAccessGuard } from 'src/commons/auth/gql-auth.guard';
+import { IContext } from 'src/commons/type/context';
 
 @Resolver()
 export class UserResolver {
@@ -18,9 +21,13 @@ export class UserResolver {
     return this.usersService.findAll();
   }
 
+  @UseGuards(GqlAuthAccessGuard)
   @Query(() => User)
-  fetchUser(@Args('email') email: string) {
-    return this.usersService.findOne({ email });
+  fetchUserLoggedIn(
+    @Context() context: IContext
+  ) {
+    const id = context.req.user.id
+    return this.usersService.findOne({ id });
   }
 
   @Query(() => [User])
