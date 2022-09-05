@@ -42,7 +42,7 @@ export class AuthsResolver {
         '이메일이나 비밀번호를 확인해주세요',
       );
 
-    this.authsService.setRefreshToken({ user, res: context.res });
+    this.authsService.setRefreshToken({ user, res: context.res, req: context.req, });
     return this.authsService.getAccessToken({ user });
   }
 
