@@ -68,4 +68,12 @@ export class AuthsResolver {
     //
     return '로그아웃';
   }
+
+  @UseGuards(GqlAuthRefreshGuard)
+  @Mutation(() => String)
+  restoreAccessToken(
+    @Context() context: IContext, //
+  ){
+    return this.authsService.getAccessToken({user: context.req.user})
+  }
 }
