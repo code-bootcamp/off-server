@@ -41,7 +41,7 @@ import * as redisStore from 'cache-manager-redis-store';
       autoSchemaFile: 'src/commons/graphql/schema.gql',
       context: ({ req, res }) => ({ req, res }),
       cors: {
-        origin: 'http://freshfridge.shop:3000',
+        origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://freshfridge.shop:3000'],
         credentials: true,
       }
     }),
