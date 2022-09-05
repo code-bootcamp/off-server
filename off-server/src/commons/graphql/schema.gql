@@ -82,13 +82,14 @@ type Query {
   fetchBoard(id: String!): Board!
   fetchFridgeFoods(page: Int): [FridgeFood!]!
   fetchUsers: [User!]!
-  fetchUser(email: String!): User!
+  fetchUserLoggedIn: User!
   fetchUserWithDeleted: [User!]!
 }
 
 type Mutation {
   login(email: String!, password: String!): String!
   logout: String!
+  restoreAccessToken: String!
   createBoard(createBoardInput: CreateBoardInput!): Board!
   updateBoard(boardId: String!, updateBoardInput: UpdateBoardInput!): Board!
   deleteBoard(boardId: String!): Boolean!

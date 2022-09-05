@@ -15,7 +15,12 @@ export class AuthsService {
       { secret: 'myRefreshKey', expiresIn: '2w' },
     );
 
-    res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
+    // res.setHeader('Set-Cookie', `refreshToken=${refreshToken}; path=/;`);
+    res.setHeader(
+      'Set-Cookie',
+      `refreshToken=${refreshToken}; path=/; domain=.freshfridge.shop; SameSite=None; Secure; httpOnly;`,
+    );
+    res.setHeader('Access-Control-Allow-Origin', 'http://freshfridge.shop')
   }
 
   getAccessToken({ user }) {
