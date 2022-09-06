@@ -22,7 +22,7 @@
 				alert('다시 입력해주세요.')
 				window.location.reload();
 			}
-			socket.emit('hihi', nickname, room);
+			socket.emit('message', nickname, room);
 
 			socket.on('connect', () => {
 				/* 누군가 채팅침 */

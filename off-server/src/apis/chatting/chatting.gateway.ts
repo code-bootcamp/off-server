@@ -6,6 +6,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+import { ChattingService } from './chatting.service';
 
 
 @WebSocketGateway({
@@ -15,12 +16,16 @@ import { Server } from 'socket.io';
   },
 })
 export class ChatGateway {
+  constructor(
+    private readonly chattingService: ChattingService, //
+  ) {}
+
   @WebSocketServer()
   server: Server;
 
   wsClients = [];
 
-  @SubscribeMessage('hihi')
+  @SubscribeMessage('message')
   connectSomeone(@MessageBody() data: string, @ConnectedSocket() client): void {
     const [nickname, room] = data;
     console.log(`${nickname}님이 코드: ${room}방에 접속했습니다.`);
@@ -40,7 +45,7 @@ export class ChatGateway {
   @SubscribeMessage('send')
   sendMessage(@MessageBody() data: string, @ConnectedSocket() client) {
     const [room, nickname, message] = data;
-    console.log(`${client.id} : ${data}`);
+    console.log(`클라이언트: ${client.id} : ${data}`);
     this.broadcast(room, client, [nickname, message]);
   }
 }
