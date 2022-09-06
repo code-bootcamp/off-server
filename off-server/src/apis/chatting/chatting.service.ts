@@ -11,7 +11,7 @@ export class ChattingService {
   ){}
 
   
-  async findMyChat({ userId }){
+  async findMyChatList({ userId }){
     const result = await this.chatRepository.find({where: {user: {id: userId}}})
     return result;
   }

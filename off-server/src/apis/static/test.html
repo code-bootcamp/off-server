@@ -15,13 +15,25 @@
 		<!-- <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.4.5.js"></script> -->
 		<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 		<script>
+      function uuidv4() {
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+      }
+
 			const socket = io('http://localhost:3000/chat');
 			const nickname = prompt('닉네임을 알려주세요.');
-			const room = prompt('입장할 방의 코드를 적어주세요.');
+      // boardId
+			let room = prompt('입장할 방의 코드를 적어주세요.');
 			if (!(nickname && room)) {
 				alert('다시 입력해주세요.')
 				window.location.reload();
 			}
+
+      room += `:${uuidv4()}`
+      
+      
+
 			socket.emit('message', nickname, room);
 
 			socket.on('connect', () => {
