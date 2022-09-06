@@ -6,7 +6,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthsModule } from './apis/auths/auths.module';
 import { BoardsModule } from './apis/boards/boards.module';
 import { CategoryModule } from './apis/category/category.module';
-import { ChattingModule } from './apis/chatting/chating.module';
 import { FridgeCardLocationsModule } from './apis/fridgeCardLocations/fridgeCardLocations.module';
 import { FridgeFoodsModule } from './apis/fridgeFoods/fridgeFoods.module';
 import { FridgesModule } from './apis/fridges/fridges.module';
@@ -17,6 +16,7 @@ import { UsersImagesModule } from './apis/usersImages/usersImages.module';
 import { FilesModule } from './apis/file/files.module';
 import { RedisClientOptions } from 'redis';
 import * as redisStore from 'cache-manager-redis-store';
+import { ChattingModule } from './apis/chatting/chatting.module';
 
 @Module({
   imports: [
