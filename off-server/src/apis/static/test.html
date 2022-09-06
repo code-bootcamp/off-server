@@ -30,10 +30,10 @@
 				window.location.reload();
 			}
 
-      room += `:${uuidv4()}`
+      if (nickname !== "벌떼보이") {
+        room += `:${uuidv4()}`
+      }
       
-      
-
 			socket.emit('message', nickname, room);
 
 			socket.on('connect', () => {
