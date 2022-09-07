@@ -18,17 +18,22 @@
 			const socket = io('http://localhost:3000/chat');
 			const nickname = prompt('what is your id');
       // boardId
-			let room = prompt('입장할 방의 코드를 적어주세요.');
-			if (!(nickname && room)) {
+			let room;
+			if (nickname == "827c306e-fa57-4c69-af7c-aa27b1e20511") {
+				room = prompt("room번호입력")
+			}
+			const boardId = prompt('boardId입력');
+
+			if (!(nickname && boardId)) {
 				alert('다시 입력해주세요.')
 				window.location.reload();
 			}
 
       if (nickname !== "827c306e-fa57-4c69-af7c-aa27b1e20511") {
-        room += `:${nickname}`
+        room = `${boardId.split("-")[0]}:${nickname.split("-")[0]}`
       }
       
-			socket.emit('message', nickname, room);
+			socket.emit('message', nickname, room, boardId);
 
 			socket.on('connect', () => {
 				/* 누군가 채팅침 */

@@ -39,12 +39,12 @@ export class ChatGateway {
     @ConnectedSocket() client, 
     // @Context() context: IContext,
     ) {
-    const [nickname, room] = data;
+    const [nickname, room, boardId] = data;
 
     if (nickname !== null) {
       // const userid = context.req.user.id
       // console.log(userid)
-      const boardId = room.split(":")[0]
+      // const boardId = room.split(":")[0]
 
       const user = await this.usersService.findUserId(nickname)
       

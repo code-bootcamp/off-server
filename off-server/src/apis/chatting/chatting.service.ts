@@ -26,7 +26,7 @@ export class ChattingService {
       board: boardId,
       message,
       user: userId,
-      chatRoom: room
+      chatRoomId: room
     })
 
     return result;
