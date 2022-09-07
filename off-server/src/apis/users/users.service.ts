@@ -27,6 +27,10 @@ export class UsersService {
     return await this.userRepository.findOne({ where: { email } });
   }
 
+  async findUserId(userId){
+    return await this.userRepository.findOne({where: {id: userId}})
+  } 
+
   async findUsersWithDeleted() {
     return await this.userRepository.find({
       withDeleted: true,

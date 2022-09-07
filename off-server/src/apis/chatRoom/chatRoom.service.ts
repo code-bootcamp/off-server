@@ -9,17 +9,19 @@ export class ChatRoomService {
     @InjectRepository(ChatRoom)
     private readonly chatRoomRepository: Repository<ChatRoom>
   ){}
+  
+  async findRoom({room}){
+    console.log("findRoom", room)
+    return await this.chatRoomRepository.findOne({where: {roomNumber: room}})
+  }
 
   async createRoom({ boardId, userId, room }){
     await this.chatRoomRepository.save({ 
       board: boardId, //
       user: userId,
-      room
+      roomNumber: room
     })
   }
 
-  async findRoom({room}){
-    return await this.chatRoomRepository.findOne({where: {room}})
-  }
 
 }

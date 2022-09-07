@@ -21,10 +21,12 @@ export class ChattingService {
     return result;
   }
 
-  async createChat( {boardId, message} ) {
+  async createChat( {boardId, message, userId, room} ) {
     const result = await this.chatRepository.save({
       board: boardId,
-      message
+      message,
+      user: userId,
+      chatRoom: room
     })
 
     return result;

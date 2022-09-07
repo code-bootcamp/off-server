@@ -79,7 +79,7 @@ enum FRIDGE_STATUS_ENUM {
 
 type ChatRoom {
   id: String!
-  room: String!
+  roomNumber: String!
   board: Board!
   user: User!
 }
