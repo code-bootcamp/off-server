@@ -12,18 +12,17 @@ export class ChattingService {
 
   
   async findMyChatList({ userId }){
-    const result = await this.chatRepository.find({where: {user: {id: userId}}})
+    const result = await this.chatRepository.find({where: userId})
     return result;
   }
 
   async findBoardChat( {boardId} ) {
-    const result = await this.chatRepository.find({where: {board: {id: boardId}}})
+    const result = await this.chatRepository.find({where: boardId})
     return result;
   }
 
-  async createChat( {userId, boardId, message} ) {
+  async createChat( {boardId, message} ) {
     const result = await this.chatRepository.save({
-      user: userId,
       board: boardId,
       message
     })
