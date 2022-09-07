@@ -28,4 +28,8 @@ export class Chat {
   @ManyToOne(() => ChatRoom)
   @Field(() => ChatRoom)
   chatRoom: ChatRoom;
+
+  @ManyToOne(() => User)
+  @Field(() => User)
+  user: User;
 }

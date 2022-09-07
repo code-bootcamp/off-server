@@ -10,9 +10,9 @@ export class ChatRoom {
   @Field(() => String)
   id: string;
 
-  @Column(() => String)
+  @Column()
   @Field(() => String)
-  room: string;
+  roomNumber: string;
 
   @ManyToOne(() => Board)
   @Field(() => Board)

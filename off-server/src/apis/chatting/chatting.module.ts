@@ -10,6 +10,7 @@ import { SalesLocations } from '../salesLocations/entities/salesLocation.entity'
 import { BoardsImage } from '../boardsImages/entities/boardsImage.entity';
 import { ChatRoom } from '../chatRoom/entities/chatRoom.entity';
 import { ChatRoomService } from '../chatRoom/chatRoom.service';
+import { UsersService } from '../users/users.service';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ChatRoomService } from '../chatRoom/chatRoom.service';
     ChattingService,
     BoardsService,
     ChatRoomService,
+    UsersService
   ]
 })
 export class ChattingModule {}
