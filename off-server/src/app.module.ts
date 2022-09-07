@@ -41,9 +41,13 @@ import { ChattingModule } from './apis/chatting/chatting.module';
       autoSchemaFile: 'src/commons/graphql/schema.gql',
       context: ({ req, res }) => ({ req, res }),
       cors: {
-        origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://freshfridge.shop:3000'],
+        origin: [
+          'http://localhost:3000',
+          'http://127.0.0.1:5500',
+          'http://freshfridge.shop:3000',
+        ],
         credentials: true,
-      }
+      },
     }),
     TypeOrmModule.forRoot({
       type: process.env.DATABASE_TYPE as 'mysql',

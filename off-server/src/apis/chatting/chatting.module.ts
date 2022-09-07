@@ -11,18 +11,12 @@ import { BoardsImage } from '../boardsImages/entities/boardsImage.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      Chat, 
-      Board, 
-      User,
-      SalesLocations, 
-      BoardsImage
-    ])
+    TypeOrmModule.forFeature([Chat, Board, User, SalesLocations, BoardsImage]),
   ],
   providers: [
     ChatGateway, //
     ChattingService,
     BoardsService,
-  ]
+  ],
 })
 export class ChattingModule {}

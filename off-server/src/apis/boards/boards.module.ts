@@ -7,6 +7,7 @@ import { SalesLocations } from '../salesLocations/entities/salesLocation.entity'
 import { User } from '../users/entities/user.entity';
 import { BoardsResolver } from './boards.resolver';
 import { BoardsService } from './boards.service';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
 import { Board } from './entities/board.entity';
 
@@ -19,6 +20,9 @@ import { Board } from './entities/board.entity';
       SalesLocations,
       BoardsImage,
     ]),
+    ElasticsearchModule.register({
+      node: 'http://elasticsearch:9200',
+    }),
   ],
   providers: [BoardsResolver, BoardsService],
 })

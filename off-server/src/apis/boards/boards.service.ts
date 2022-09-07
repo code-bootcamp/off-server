@@ -1,9 +1,16 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  Inject,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BoardsImage } from '../boardsImages/entities/boardsImage.entity';
 import { SalesLocations } from '../salesLocations/entities/salesLocation.entity';
 import { Board, Board_STATUS_ENUM } from './entities/board.entity';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class BoardsService {
@@ -12,10 +19,30 @@ export class BoardsService {
     private readonly boardRepository: Repository<Board>,
     @InjectRepository(SalesLocations)
     private readonly salesLocationRepository: Repository<SalesLocations>,
-
     @InjectRepository(BoardsImage)
     private readonly boardsImageRepository: Repository<BoardsImage>,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
+    private readonly elasticsearchService: ElasticsearchService,
   ) {}
+
+  async elasticsearchTitle({ title }) {
+    const mycache = await this.cacheManager.get(title);
+    if (mycache) {
+      return mycache;
+    } else {
+      const data = await this.elasticsearchService.search({
+        index: 'off',
+        query: {
+          match: {
+            title: title,
+          },
+        },
+      });
+      await this.cacheManager.set(title, data), { ttl: 60 };
+      return data;
+    }
+  }
 
   async findAll() {
     return await this.boardRepository.find({
@@ -69,8 +96,8 @@ export class BoardsService {
       result = this.boardRepository.save({
         ...myboard,
         id: boardId,
-        status
-      })
+        status,
+      });
     }
     result = this.boardRepository.save({
       ...myboard,

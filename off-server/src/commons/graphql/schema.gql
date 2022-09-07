@@ -78,6 +78,7 @@ enum FRIDGE_STATUS_ENUM {
 }
 
 type Query {
+  searchBoards(search: String): [Board!]!
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
   fetchFridgeFoods(page: Int): [FridgeFood!]!
