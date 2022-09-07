@@ -17,6 +17,7 @@ import { FilesModule } from './apis/file/files.module';
 import { RedisClientOptions } from 'redis';
 import * as redisStore from 'cache-manager-redis-store';
 import { ChattingModule } from './apis/chatting/chatting.module';
+import { ChatRoom } from './apis/chatRoom/entities/chatRoom.entity';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ChattingModule } from './apis/chatting/chatting.module';
     SalesHistoryModule,
     UsersModule,
     UsersImagesModule,
+    ChatRoom,
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -45,6 +47,7 @@ import { ChattingModule } from './apis/chatting/chatting.module';
           'http://localhost:3000',
           'http://127.0.0.1:5500',
           'http://freshfridge.shop:3000',
+          'https://freshfridge.shop',
         ],
         credentials: true,
       },

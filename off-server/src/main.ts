@@ -7,7 +7,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {cors: true});
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://freshfridge.shop:3000'],
+    origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://freshfridge.shop:3000', 'https://freshfridge.shop'],
     credentials: true, 
   });
   app.useStaticAssets(join(__dirname, '..', 'static'));

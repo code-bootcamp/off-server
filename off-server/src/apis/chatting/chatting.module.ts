@@ -8,15 +8,25 @@ import { ChatGateway } from './chatting.gateway';
 import { BoardsService } from '../boards/boards.service';
 import { SalesLocations } from '../salesLocations/entities/salesLocation.entity';
 import { BoardsImage } from '../boardsImages/entities/boardsImage.entity';
+import { ChatRoom } from '../chatRoom/entities/chatRoom.entity';
+import { ChatRoomService } from '../chatRoom/chatRoom.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Chat, Board, User, SalesLocations, BoardsImage]),
+    TypeOrmModule.forFeature([
+      Chat,
+      Board,
+      User,
+      SalesLocations,
+      BoardsImage,
+      ChatRoom,
+    ]),
   ],
   providers: [
     ChatGateway, //
     ChattingService,
     BoardsService,
+    ChatRoomService,
   ],
 })
 export class ChattingModule {}
