@@ -1,3 +1,4 @@
+import { Context } from '@nestjs/graphql';
 import {
   ConnectedSocket,
   MessageBody,
@@ -6,10 +7,10 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+import { IContext } from 'src/commons/type/context';
 import { BoardsService } from '../boards/boards.service';
+import { ChatRoomService } from '../chatRoom/chatRoom.service';
 import { ChattingService } from './chatting.service';
-
-// let count = 0;
 
 @WebSocketGateway({
   namespace: 'chat',
@@ -22,36 +23,42 @@ export class ChatGateway {
   constructor(
     private readonly chattingService: ChattingService, //
     private readonly boardsService: BoardsService,
+    private readonly chatRoomService: ChatRoomService,
   ) {}
 
   @WebSocketServer()
   server: Server;
 
   wsClients = [];
-
+  
   @SubscribeMessage('message')
-  async connectSomeone(@MessageBody() data: string, @ConnectedSocket() client): Promise<void> {
-    const [nickname, room] = data;
-    // 인원수 제한
-    console.log(room)
-    // console.log("count:", count)
+  async connectSomeone(
+    @MessageBody() data: string, //
+    @ConnectedSocket() client, 
+    @Context() context: IContext,
+    ): Promise<void> {
+    const [nickname] = data;
+    let [room] = data;
 
     const boardId = room.split(":")[0]
+    const userId = context.req.user.id
 
-    const board = await this.boardsService.findOne({id: boardId})
-    const writterNickname = board.user.nickname
+    console.log(nickname, room)
+    // const board = await this.boardsService.findOne({id: boardId})
+    // const writter = board.user.nickname
+    const chatHistory = await this.chatRoomService.findRoom({room})
+    if (!chatHistory) {
+      this.chatRoomService.createRoom({ boardId, userId, room })
+    }
 
-    // 두명 담아주기
+    const result = await this.chatRoomService.findRoom({ room })  
+    if (result) room = result.room
+
     if (nickname !== null) {
-      const chatter = [writterNickname, nickname]
-      console.log(`${nickname}님이 코드: ${room}방에 접속했습니다.`);
       const comeOn = `${nickname}님이 입장했습니다.`;
       
-      if(nickname !== board.user.nickname) {
-        chatter.map((el: string) => {
-          this.server.emit('comeOn' + room, el);
-        })
-      }
+      this.server.emit('comeOn' + room, comeOn);
+      
       this.wsClients.push(client);
     }
   }
