@@ -10,18 +10,25 @@ import { SalesLocations } from '../salesLocations/entities/salesLocation.entity'
 import { BoardsImage } from '../boardsImages/entities/boardsImage.entity';
 import { ChatRoom } from '../chatRoom/entities/chatRoom.entity';
 import { ChatRoomService } from '../chatRoom/chatRoom.service';
+import {
+  ElasticsearchModule,
+  ElasticsearchService,
+} from '@nestjs/elasticsearch';
 import { UsersService } from '../users/users.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Chat, 
-      Board, 
+      Chat,
+      Board,
       User,
-      SalesLocations, 
+      SalesLocations,
       BoardsImage,
-      ChatRoom
-    ])
+      ChatRoom,
+    ]),
+    ElasticsearchModule.register({
+      node: 'http://elasticsearch:9200',
+    }),
   ],
   providers: [
     ChatGateway, //
