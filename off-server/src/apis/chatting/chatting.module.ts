@@ -15,6 +15,7 @@ import {
   ElasticsearchService,
 } from '@nestjs/elasticsearch';
 import { UsersService } from '../users/users.service';
+import { UsersImage } from '../usersImages/entities/usersImage.entity';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UsersService } from '../users/users.service';
       SalesLocations,
       BoardsImage,
       ChatRoom,
+      UsersImage,
     ]),
     ElasticsearchModule.register({
       node: 'http://elasticsearch:9200',
