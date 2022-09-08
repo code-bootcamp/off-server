@@ -37,9 +37,9 @@ export class UserResolver {
 
   @Mutation(() => User)
   async createUser(@Args('createUserInput') CreateUserInput: CreateUserInput) {
-    const hashePassword = await bcrypt.hash(CreateUserInput.password, 10);
+    const hashedPassword = await bcrypt.hash(CreateUserInput.password, 10);
     const user = await this.usersService.create({
-      hashePassword,
+      hashedPassword,
       ...CreateUserInput,
     });
 
