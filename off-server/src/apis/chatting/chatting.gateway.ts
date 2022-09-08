@@ -10,6 +10,7 @@ import { Server } from 'socket.io';
 import { IContext } from 'src/commons/type/context';
 import { BoardsService } from '../boards/boards.service';
 import { ChatRoomService } from '../chatRoom/chatRoom.service';
+import { UsersService } from '../users/users.service';
 import { ChattingService } from './chatting.service';
 
 @WebSocketGateway({
@@ -24,6 +25,7 @@ export class ChatGateway {
     private readonly chattingService: ChattingService, //
     private readonly boardsService: BoardsService,
     private readonly chatRoomService: ChatRoomService,
+    private readonly usersService: UsersService
   ) {}
 
   @WebSocketServer()
@@ -35,27 +37,23 @@ export class ChatGateway {
   async connectSomeone(
     @MessageBody() data: string, //
     @ConnectedSocket() client, 
-    @Context() context: IContext,
-    ): Promise<void> {
-    const [nickname] = data;
-    let [room] = data;
-
-    const boardId = room.split(":")[0]
-    const userId = context.req.user.id
-
-    console.log(nickname, room)
-    // const board = await this.boardsService.findOne({id: boardId})
-    // const writter = board.user.nickname
-    const chatHistory = await this.chatRoomService.findRoom({room})
-    if (!chatHistory) {
-      this.chatRoomService.createRoom({ boardId, userId, room })
-    }
-
-    const result = await this.chatRoomService.findRoom({ room })  
-    if (result) room = result.room
+    // @Context() context: IContext,
+    ) {
+    const [nickname, room, boardId] = data;
 
     if (nickname !== null) {
-      const comeOn = `${nickname}님이 입장했습니다.`;
+      // const userid = context.req.user.id
+      // console.log(userid)
+      // const boardId = room.split(":")[0]
+
+      const user = await this.usersService.findUserId(nickname)
+      
+      const chatHistory = await this.chatRoomService.findRoom({room})
+      if (!chatHistory) {
+        await this.chatRoomService.createRoom({ boardId, userId: user.id, room })
+      }
+
+      const comeOn = `${user.nickname}님이 입장했습니다.`;
       
       this.server.emit('comeOn' + room, comeOn);
       
@@ -74,13 +72,21 @@ export class ChatGateway {
   }
 
   @SubscribeMessage('send')
-  sendMessage(
+  async sendMessage(
     @MessageBody() data: string, //
-    @ConnectedSocket() client
-    ) {
+    @ConnectedSocket() client,
+    // @Context() context: IContext,
+    ): Promise<void> {
+    // const userId = context.req.user.id
     const [room, nickname, message] = data;
     // console.log(`클라이언트: ${client.id} : ${data}`);
-    this.broadcast(room, client, [nickname, message]);
+    const realNickname = (await this.usersService.findUserId(nickname)).nickname
+    const userId = nickname
+
+    this.broadcast(room, client, [realNickname, message]);
+    const boardId = room.split(":")[0]
+
+    await this.chattingService.createChat({boardId, message, userId, room})
   }
 
 

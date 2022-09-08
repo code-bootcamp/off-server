@@ -27,13 +27,17 @@ export class UsersService {
     return await this.userRepository.findOne({ where: { email } });
   }
 
+  async findUserId(userId){
+    return await this.userRepository.findOne({where: {id: userId}})
+  } 
+
   async findUsersWithDeleted() {
     return await this.userRepository.find({
       withDeleted: true,
     });
   }
 
-  async create({ hashePassword: password, ...createUserInput }) {
+  async create({ hashedPassword: password, ...createUserInput }) {
     console.log(password, createUserInput);
     const user = await this.userRepository.findOne({
       where: { email: createUserInput.email },

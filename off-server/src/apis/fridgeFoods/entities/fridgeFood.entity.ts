@@ -6,9 +6,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -49,7 +47,7 @@ export class FridgeFood {
   @Field(() => Int)
   alarm: number;
 
-  @Column({type: 'enum', enum: FRIDGE_STATUS_ENUM})
+  @Column({type: 'enum', enum: FRIDGE_STATUS_ENUM, nullable: true})
   @Field(() => FRIDGE_STATUS_ENUM)
   status: string;
 

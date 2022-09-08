@@ -77,13 +77,6 @@ enum FRIDGE_STATUS_ENUM {
   FREEZER
 }
 
-type ChatRoom {
-  id: String!
-  room: String!
-  board: Board!
-  user: User!
-}
-
 type Query {
   fetchBoardTitle(title: String): JSONObject!
   fetchBoards: [Board!]!

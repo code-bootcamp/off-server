@@ -14,6 +14,7 @@ import {
   ElasticsearchModule,
   ElasticsearchService,
 } from '@nestjs/elasticsearch';
+import { UsersService } from '../users/users.service';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import {
     ChattingService,
     BoardsService,
     ChatRoomService,
-  ],
+    UsersService
+  ]
 })
 export class ChattingModule {}

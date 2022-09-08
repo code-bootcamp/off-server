@@ -25,7 +25,11 @@ export class Chat {
   @Field(() => Date)
   createAt: Date;
 
-  @ManyToOne(() => ChatRoom)
-  @Field(() => ChatRoom)
-  chatRoom: ChatRoom;
+  @Column()
+  @Field(() => String)
+  chatRoomId: string;
+
+  @ManyToOne(() => User)
+  @Field(() => User)
+  user: User;
 }
