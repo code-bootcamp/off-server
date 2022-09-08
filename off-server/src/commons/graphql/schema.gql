@@ -107,7 +107,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   getToken(phone: String!): String!
   checkValidToken(phone: String!, token: String!): String!
-  updateUser(email: String!, updateUserInput: updateUserInput!): User!
+  updateUser(updateUserInput: updateUserInput!): User!
   deleteUser(email: String!): Boolean!
   restoreUser(email: String!): Boolean!
 }
@@ -168,4 +168,5 @@ input updateUserInput {
   password: String
   phone: String
   nickname: String
+  image: String!
 }

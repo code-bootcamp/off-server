@@ -35,7 +35,7 @@ export class User {
   nickname: string;
 
   @JoinColumn()
-  @OneToOne(() => UsersImage)
+  @OneToOne(() => UsersImage, usersImage => usersImage.id)
   @Field(() => UsersImage)
   usersimage: UsersImage;
 

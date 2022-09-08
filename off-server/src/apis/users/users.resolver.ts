@@ -44,7 +44,7 @@ export class UserResolver {
     });
 
     const userId = user.id;
-    this.fridgesService.create({ userId });
+    await this.fridgesService.create({ userId });
 
     return user;
   }
@@ -62,13 +62,15 @@ export class UserResolver {
     return await this.usersService.tokenCheck({ phone, token });
   }
 
+  @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => User)
   async updateUser(
-    @Args('email') email: string,
     @Args('updateUserInput') updateUserInput: updateUserInput,
+    @Context() context: IContext,
   ) {
-    const hashePassword = await bcrypt.hash(updateUserInput.password, 10);
-    return this.usersService.update({ updateUserInput, email, hashePassword });
+    const email = context.req.user.email;
+    
+    return this.usersService.update({ updateUserInput, email});
   }
 
   @Mutation(() => Boolean)
