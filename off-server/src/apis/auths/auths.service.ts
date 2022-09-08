@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthsService {
@@ -47,5 +47,24 @@ export class AuthsService {
       { email: user.email, sub: user.id },
       { secret: 'myAccessKey', expiresIn: '1h' },
     );
+  }
+
+  async setSocialLogin({res, req}){
+    let user = await this.userService.findOne( {email: req.user.email} )
+
+    if (!user) {
+      const hashedPassword = await bcrypt.hash(req.user.password, 10);
+
+      user = await this.userService.create({
+        hashedPassword,
+        email: req.user.email,
+        name: req.user.name,
+        phone: req.user.phone,
+        nickname: req.user.nickname
+      });
+    }
+
+    this.setRefreshToken({ user, res, req });
+    res.redirect('/main');
   }
 }
