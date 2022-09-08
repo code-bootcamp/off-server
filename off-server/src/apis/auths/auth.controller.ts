@@ -23,23 +23,15 @@ export class AuthController {
     @Req() req: Request & IOAuthUser, //
     @Res() res: Response,
   ) {
-    // 1. 가입확인
-    let user = await this.userService.findOne({ email: req.user.email });
+    await this.authService.setSocialLogin({req, res})
+  }
 
-    // 2. 회원가입
-    if (!user) {
-      // const password = req.user.password
-      // const hashePassword = await bcrypt.hash(password, 10);
-      user = await this.userService.create({
-      hashedPassword: req.user.password,
-      email: req.user.email,
-      name: req.user.name,
-      phone: req.user.phone,
-      nickname: req.user.nickname
-      });
-    }
-    // 3. 로그인
-    this.authService.setRefreshToken({ user, res, req });
-    res.redirect('/main');
+  @Get('/login/kakao')
+  @UseGuards(AuthGuard('kakao'))
+  async loginKakao(
+    @Req() req: Request & IOAuthUser, //
+    @Res() res: Response,
+  ) {
+    await this.authService.setSocialLogin({ req, res })
   }
 }
