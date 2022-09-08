@@ -29,19 +29,22 @@ export class BoardsService {
   async elasticsearchTitle({ title }) {
     const mycache = await this.cacheManager.get(title);
     if (mycache) {
+      console.log('mycache', mycache);
       return mycache;
-    } else {
-      const data = await this.elasticsearchService.search({
-        index: 'off',
-        query: {
-          match: {
-            title: title,
-          },
-        },
-      });
-      await this.cacheManager.set(title, data), { ttl: 60 };
-      return data;
     }
+    const data = await this.elasticsearchService.search({
+      index: 'off',
+      query: {
+        match: {
+          title: title,
+        },
+      },
+    });
+    console.log('data!!!!!!!!!!!!!!!!!!', data);
+    // const result = data.hits.hits.map((ele) => ele._source);
+    await this.cacheManager.set(title, data), { ttl: 60 };
+    // result[0]['expdate'] = new Date(result[0]['expdate']);
+    return data;
   }
 
   async findAll() {

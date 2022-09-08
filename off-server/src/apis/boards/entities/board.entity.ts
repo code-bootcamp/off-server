@@ -14,6 +14,7 @@ import {
   OneToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 export enum Board_STATUS_ENUM {
@@ -68,4 +69,7 @@ export class Board {
   @DeleteDateColumn()
   @Field(() => String)
   deletedAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

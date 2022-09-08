@@ -10,6 +10,10 @@ import { SalesLocations } from '../salesLocations/entities/salesLocation.entity'
 import { BoardsImage } from '../boardsImages/entities/boardsImage.entity';
 import { ChatRoom } from '../chatRoom/entities/chatRoom.entity';
 import { ChatRoomService } from '../chatRoom/chatRoom.service';
+import {
+  ElasticsearchModule,
+  ElasticsearchService,
+} from '@nestjs/elasticsearch';
 
 @Module({
   imports: [
@@ -21,6 +25,9 @@ import { ChatRoomService } from '../chatRoom/chatRoom.service';
       BoardsImage,
       ChatRoom,
     ]),
+    ElasticsearchModule.register({
+      node: 'http://elasticsearch:9200',
+    }),
   ],
   providers: [
     ChatGateway, //
