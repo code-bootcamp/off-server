@@ -29,7 +29,6 @@ export class BoardsService {
   async elasticsearchTitle({ title }) {
     const mycache = await this.cacheManager.get(title);
     if (mycache) {
-      console.log('mycache', mycache);
       return mycache;
     }
     const data = await this.elasticsearchService.search({
@@ -40,9 +39,31 @@ export class BoardsService {
         },
       },
     });
-    console.log('data!!!!!!!!!!!!!!!!!!', data);
     // const result = data.hits.hits.map((ele) => ele._source);
     await this.cacheManager.set(title, data), { ttl: 60 };
+    // result[0]['expdate'] = new Date(result[0]['expdate']);
+    return data;
+  }
+  async elasticsearchCategory({ category }) {
+    const mycache = await this.cacheManager.get(category);
+    if (mycache) {
+      console.log('mycache', mycache);
+      return mycache;
+    }
+    const data = await this.elasticsearchService.search({
+      index: 'off',
+      query: {
+        bool: {
+          must: {
+            match: { categoryname: category },
+          },
+        },
+      },
+    });
+    // console.log('data!!!!!!!!!!!!!!!!!!', data);
+    const result = data.hits.hits.map((ele) => ele._source);
+    console.log(result);
+    await this.cacheManager.set(category, data), { ttl: 60 };
     // result[0]['expdate'] = new Date(result[0]['expdate']);
     return data;
   }

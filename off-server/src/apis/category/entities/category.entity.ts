@@ -1,5 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -8,7 +13,7 @@ export class Category {
   @Field(() => String)
   id: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   @Field(() => String)
   name: string;
 }
