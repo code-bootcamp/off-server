@@ -28,10 +28,9 @@ import { Token } from './entities/token.entity';
     JwtService,
     JwtGoogleStrategy,
     JwtKakaoStrategy,
-    
   ],
   controllers: [
     AuthController, //
-  ]
+  ],
 })
 export class AuthsModule {}

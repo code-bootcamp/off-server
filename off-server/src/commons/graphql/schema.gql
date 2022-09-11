@@ -79,6 +79,8 @@ enum FRIDGE_STATUS_ENUM {
 
 type Query {
   fetchBoardTitle(title: String): JSONObject!
+  fetchBoardCategory(category: String): JSONObject!
+  fetchBoardLocation(location: String): JSONObject!
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
   fetchFridgeFoods(page: Int): [FridgeFood!]!

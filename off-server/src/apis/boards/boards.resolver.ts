@@ -7,6 +7,7 @@ import { CreateBoardInput } from './dto/createBoard.input';
 import { UpdateBoardInput } from './dto/updateBoard.input';
 import { Board, Board_STATUS_ENUM } from './entities/board.entity';
 import { GraphQLJSONObject } from 'graphql-type-json';
+import { Category } from '../category/entities/category.entity';
 
 @Resolver()
 export class BoardsResolver {
@@ -16,6 +17,18 @@ export class BoardsResolver {
     @Args({ name: 'title', nullable: true }) title: string,
   ) {
     return this.boardsService.elasticsearchTitle({ title });
+  }
+  @Query(() => GraphQLJSONObject)
+  async fetchBoardCategory(
+    @Args({ name: 'category', nullable: true }) category: string,
+  ) {
+    return this.boardsService.elasticsearchCategory({ category });
+  }
+  @Query(() => GraphQLJSONObject)
+  async fetchBoardLocation(
+    @Args({ name: 'location', nullable: true }) location: string,
+  ) {
+    return this.boardsService.elasticsearchLocation({ location });
   }
 
   @Query(() => [Board])
