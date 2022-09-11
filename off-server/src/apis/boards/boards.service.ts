@@ -68,6 +68,27 @@ export class BoardsService {
     return data;
   }
 
+  async elasticsearchLocation({ location }) {
+    const mycache = await this.cacheManager.get(location);
+    if (mycache) {
+      return mycache;
+    }
+    const data = await this.elasticsearchService.search({
+      index: 'off',
+      query: {
+        multi_match: {
+          query: location,
+          type: 'cross_fields',
+          fields: ['address', 'detail'],
+        },
+      },
+    });
+    // const result = data.hits.hits.map((ele) => ele._source);
+    await this.cacheManager.set(location, data), { ttl: 60 };
+    // result[0]['expdate'] = new Date(result[0]['expdate']);
+    return data;
+  }
+
   async findAll() {
     return await this.boardRepository.find({
       relations: ['category', 'user', 'salesLocation'],

@@ -24,6 +24,12 @@ export class BoardsResolver {
   ) {
     return this.boardsService.elasticsearchCategory({ category });
   }
+  @Query(() => GraphQLJSONObject)
+  async fetchBoardLocation(
+    @Args({ name: 'location', nullable: true }) location: string,
+  ) {
+    return this.boardsService.elasticsearchLocation({ location });
+  }
 
   @Query(() => [Board])
   fetchBoards() {
