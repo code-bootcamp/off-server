@@ -7,6 +7,7 @@ import { JwtGoogleStrategy } from 'src/commons/auth/jwt-social-google.strategy';
 import { JwtKakaoStrategy } from 'src/commons/auth/jwt-social-kakao.strategy';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
+import { UsersImage } from '../usersImages/entities/usersImage.entity';
 import { AuthController } from './auth.controller';
 import { AuthsResolver } from './auths.resolver';
 import { AuthsService } from './auths.service';
@@ -16,7 +17,7 @@ import { Token } from './entities/token.entity';
   imports: [
     JwtModule.register({}),
     CacheModule.register(),
-    TypeOrmModule.forFeature([Token, User]),
+    TypeOrmModule.forFeature([Token, User, UsersImage]),
   ],
   providers: [
     AuthsResolver, //
@@ -25,8 +26,8 @@ import { Token } from './entities/token.entity';
     JwtAccessStrategy,
     JwtRefreshStrategy,
     JwtService,
-    // JwtGoogleStrategy,
-    // JwtKakaoStrategy,
+    JwtGoogleStrategy,
+    JwtKakaoStrategy,
   ],
   controllers: [
     AuthController, //

@@ -13,7 +13,7 @@ export class UsersImage {
   @Field(() => String)
   url: string;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, user => user.usersimage)
   @Field(() => User)
   user: User;
 }

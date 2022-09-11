@@ -18,4 +18,5 @@ export class CreateUserInput {
 
   @Field(() => String)
   nickname: string;
+
 }

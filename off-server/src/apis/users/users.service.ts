@@ -9,6 +9,8 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import coolsms from 'coolsms-node-sdk';
 import { Cache } from 'cache-manager';
+import { UsersImage } from '../usersImages/entities/usersImage.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +19,8 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     @Inject(CACHE_MANAGER) //
     private readonly cacheManager: Cache,
+    @InjectRepository(UsersImage)
+    private readonly usersImageRepository: Repository<UsersImage>
   ) {}
 
   async findAll() {
@@ -86,16 +90,30 @@ export class UsersService {
     }
   }
 
-  async update({ hashePassword: password, email, updateUserInput }) {
-    const myuser = await this.userRepository.findOne({
+  async update({ email, updateUserInput }) {
+    const user = await this.userRepository.findOne({
       where: { email: email },
     });
-    const result = this.userRepository.save({
-      ...myuser,
-      email: email,
-      ...updateUserInput,
-      password,
+
+    const {image, password, ...updateUser} = updateUserInput;
+
+    let hashedPassword: string; 
+    password ? hashedPassword = await bcrypt.hash(password, 10) : hashedPassword = user.password
+
+    const usersimage = await this.usersImageRepository.save({
+      url: image,
+      user
+    })
+
+    const result = await this.userRepository.save({
+      id: user.id,
+      ...user,
+      ...updateUser,
+      usersimage,
+      password: hashedPassword,
     });
+
+
     return result;
   }
   async delete({ email }) {
