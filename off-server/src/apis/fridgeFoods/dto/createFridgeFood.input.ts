@@ -12,8 +12,8 @@ export class CreateFridgeFoodInput {
   @Field(() => Date)
   expDate: Date;
 
-  @Field(() => Int)
-  alarm: number;
+  @Field(() => Date)
+  alarm: Date;
 
   @Field(() => String)
   category: string

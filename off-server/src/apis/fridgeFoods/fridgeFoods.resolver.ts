@@ -17,25 +17,35 @@ export class FridgeFoodsResolver {
 
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [FridgeFood])
+  async fetchCreatedFridgeFoods(
+    @Context() context: IContext, //
+  ){
+    const userId = context.req.user.id
+    return await this.fridgeFoodsService.findAllNull({userId}) 
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Query(() => [FridgeFood])
   async fetchFridgeFoods(
     @Context() context: IContext, //
     @Args({name: 'page', type: () => Int, nullable: true}) page: number,
+    @Args({name: 'status', nullable: true}) status: FRIDGE_STATUS_ENUM,
   ){
     if (!page) page = 1
     const userId = context.req.user.id
-    return await this.fridgeFoodsService.findAll({userId, page}) 
+    return await this.fridgeFoodsService.findAll({userId, page, status}) 
   }
 
   // 냉장고에 음식 등록하기
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => FridgeFood)
-  createFridgeFood(
+  async createFridgeFood(
     @Args('fridgeFoodInput') fridgeFoodInput: CreateFridgeFoodInput,
-    @Args('status') status: FRIDGE_STATUS_ENUM,
+    @Args({name: 'status', nullable: true}) status: FRIDGE_STATUS_ENUM,
     @Context() context: IContext
   ){
     const userId = context.req.user.id
-    return this.fridgeFoodsService.createFood({fridgeFoodInput, userId, status})
+    return await this.fridgeFoodsService.createFood({fridgeFoodInput, userId, status})
   }
 
   // 음식 수정
