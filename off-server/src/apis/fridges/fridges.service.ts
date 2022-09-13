@@ -12,8 +12,7 @@ export class FridgesService {
 
   async findOne({userId}){
     return await this.fridgeRepository.findOne({
-      where: {user: userId},
-      relations: ['user']
+      where: {user: {id: userId}},
     })
   }
 

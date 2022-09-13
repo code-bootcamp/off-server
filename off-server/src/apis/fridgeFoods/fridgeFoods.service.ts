@@ -1,7 +1,7 @@
 import { Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { Args } from "@nestjs/graphql";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { IsNull, Repository } from "typeorm";
 import { Fridge } from "../fridges/entities/fridges.entity";
 import { FridgesService } from "../fridges/fridges.service";
 import { FridgeFood } from "./entities/fridgeFood.entity";
@@ -16,13 +16,35 @@ export class FridgeFoodsService {
     private readonly fridge: Repository<Fridge>
   ){}
 
-  async findAll({userId, page}){
+  async findAll({userId, page, status}){
     const fridge = await this.fridge.findOne({where: {user: {id: userId}}})
     console.log("find", fridge)
     const result = await this.fridgeFoodRepository.find({
-      where: {fridge: {id: fridge.id}},
+      where: {
+        fridge: {
+        id: fridge.id,}, 
+        status
+      },
+      order: {regDate: 'ASC'},
       // skip: (page - 1) * 5,
       // take: 5,
+      relations: ['fridge', 'category']
+    })
+
+    return result
+  }
+
+  async findAllNull({userId}){
+    const fridge = await this.fridge.findOne({where: {user: {id: userId}}})
+    console.log("find", fridge)
+    const result = await this.fridgeFoodRepository.find({
+      where: {
+        fridge: {
+        id: fridge.id,
+      }, 
+        status: IsNull()
+      },
+      order: {regDate: 'ASC'},
       relations: ['fridge', 'category']
     })
 

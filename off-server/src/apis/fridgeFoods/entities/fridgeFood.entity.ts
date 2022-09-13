@@ -44,8 +44,8 @@ export class FridgeFood {
   regDate: Date;
 
   @Column()
-  @Field(() => Int)
-  alarm: number;
+  @Field(() => Date)
+  alarm: Date;
 
   @Column({type: 'enum', enum: FRIDGE_STATUS_ENUM, nullable: true})
   @Field(() => FRIDGE_STATUS_ENUM)
