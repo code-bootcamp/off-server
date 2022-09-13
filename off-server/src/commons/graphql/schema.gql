@@ -83,6 +83,7 @@ type Query {
   fetchBoardLocation(location: String): JSONObject!
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
+  fetchCategory: [Category!]!
   fetchCreatedFridgeFoods: [FridgeFood!]!
   fetchFridgeFoods(page: Int, status: String): [FridgeFood!]!
   fetchUsers: [User!]!
