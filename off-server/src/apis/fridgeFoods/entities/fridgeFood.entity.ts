@@ -14,6 +14,7 @@ import {
 export enum FRIDGE_STATUS_ENUM {
   FRIDGE = 'FRIDGE',
   FREEZER = 'FREEZER',
+  LIST = 'LIST',
 }
 
 registerEnumType(FRIDGE_STATUS_ENUM, {
@@ -47,7 +48,7 @@ export class FridgeFood {
   @Field(() => Date)
   alarm: Date;
 
-  @Column({type: 'enum', enum: FRIDGE_STATUS_ENUM, nullable: true})
+  @Column({type: 'enum', enum: FRIDGE_STATUS_ENUM})
   @Field(() => FRIDGE_STATUS_ENUM)
   status: string;
 
