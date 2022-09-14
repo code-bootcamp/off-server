@@ -1,0 +1,50 @@
+{
+  "template": "board",
+  "index_patterns": ["*"],
+  "order": "1",
+  "settings": {
+    "refresh_interval": "5s",
+    "analysis": {
+      "analyzer": {
+        "off_analyzer": {
+          "tokenizer": "off_tokenizer"
+        }
+      },
+      "tokenizer": {
+        "off_tokenizer": {
+          "type": "nGram",
+          "min_gram": "1",
+          "max_gram": "10"
+        }
+      }
+    },
+    "max_ngram_diff": "20"
+  },
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "text",
+        "analyzer": "off_analyzer",
+        "search_analyzer": "standard"
+      },
+      "categoryname": {
+        "type": "text",
+        "analyzer": "off_analyzer",
+        "search_analyzer": "standard"
+      },
+      "address": {
+        "type": "text",
+        "analyzer": "off_analyzer",
+        "search_analyzer": "standard"
+      },
+      "detail": {
+        "type": "text",
+        "analyzer": "off_analyzer",
+        "search_analyzer": "standard",
+        "fields": {
+          "keyword": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
