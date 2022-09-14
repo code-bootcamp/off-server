@@ -15,6 +15,7 @@ export class FridgeFoodsResolver {
     private readonly fridgesService: FridgesService
   ){}
 
+  /*
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [FridgeFood])
   async fetchCreatedFridgeFoods(
@@ -23,6 +24,7 @@ export class FridgeFoodsResolver {
     const userId = context.req.user.id
     return await this.fridgeFoodsService.findAllNull({userId}) 
   }
+  */
 
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [FridgeFood])
@@ -41,7 +43,7 @@ export class FridgeFoodsResolver {
   @Mutation(() => FridgeFood)
   async createFridgeFood(
     @Args('fridgeFoodInput') fridgeFoodInput: CreateFridgeFoodInput,
-    @Args({name: 'status', nullable: true}) status: FRIDGE_STATUS_ENUM,
+    @Args({name: 'status'}) status: FRIDGE_STATUS_ENUM,
     @Context() context: IContext
   ){
     const userId = context.req.user.id
