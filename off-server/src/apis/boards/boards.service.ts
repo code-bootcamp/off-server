@@ -53,11 +53,7 @@ export class BoardsService {
     const data = await this.elasticsearchService.search({
       index: 'off',
       query: {
-        bool: {
-          must: {
-            match: { categoryname: category },
-          },
-        },
+        match: { categoryname: category },
       },
     });
     // console.log('data!!!!!!!!!!!!!!!!!!', data);
