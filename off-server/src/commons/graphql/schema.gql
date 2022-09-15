@@ -75,6 +75,7 @@ type FridgeFood {
 enum FRIDGE_STATUS_ENUM {
   FRIDGE
   FREEZER
+  LIST
 }
 
 type Query {
@@ -84,7 +85,6 @@ type Query {
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
   fetchCategory: [Category!]!
-  fetchCreatedFridgeFoods: [FridgeFood!]!
   fetchFridgeFoods(page: Int, status: String): [FridgeFood!]!
   fetchUsers: [User!]!
   fetchUserLoggedIn: User!
@@ -105,7 +105,7 @@ type Mutation {
   deleteBoard(boardId: String!): Boolean!
   uploadFile(files: [Upload!]!): [String!]!
   createCategory(name: String!): Category!
-  createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!, status: String): FridgeFood!
+  createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!, status: String!): FridgeFood!
   updateFridgeFoods(fridgeFoodId: String!, updateFridgeFoodInput: UpdateFridgeFoodInput!, status: String!): String!
   deleteFridgeFood(foodId: String!, fridgeId: String!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
