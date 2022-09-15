@@ -75,11 +75,11 @@ export class FridgeFoodsService {
     return result;
   }
 
-  async deleteFood({fridgeId, foodId, userId}){
+  async deleteFood({foodId, userId}){
     // user의 냉장고음식인지 check
     const fridge = await this.fridgesService.findOne(userId)
 
-    if (fridgeId !== fridge.id) {
+    if (userId !== fridge.user.id) {
       throw new UnprocessableEntityException('권한이 없습니다.')
     }
 

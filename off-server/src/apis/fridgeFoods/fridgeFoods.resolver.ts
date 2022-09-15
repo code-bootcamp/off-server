@@ -70,12 +70,11 @@ export class FridgeFoodsResolver {
   @Mutation(() => Boolean)
   async deleteFridgeFood(
     @Args('foodId') id: string, //
-    @Args('fridgeId') fridgeId: string,
     @Context() context: IContext
     ){
     const foodId = id
     const userId = context.req.user.id
     
-    return await this.fridgeFoodsService.deleteFood({fridgeId, foodId, userId})
+    return await this.fridgeFoodsService.deleteFood({foodId, userId})
   }
 }
