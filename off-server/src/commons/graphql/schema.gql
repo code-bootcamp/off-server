@@ -14,7 +14,7 @@ type User {
   email: String!
   password: String!
   nickname: String!
-  usersimage: UsersImage!
+  usersimage: UsersImage
   phone: String!
   regDate: DateTime!
   deletedAt: String!

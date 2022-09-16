@@ -28,7 +28,10 @@ export class UsersService {
   }
 
   async findOne({ email }) {
-    return await this.userRepository.findOne({ where: { email } });
+    return await this.userRepository.findOne({ 
+      where: { email },
+      relations: ['usersimage'] 
+    });
   }
 
   async findUserId(userId){
