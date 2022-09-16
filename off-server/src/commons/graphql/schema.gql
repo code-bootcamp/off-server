@@ -172,5 +172,5 @@ input updateUserInput {
   password: String
   phone: String
   nickname: String
-  image: String!
+  image: String
 }
