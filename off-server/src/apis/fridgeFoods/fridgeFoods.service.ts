@@ -84,12 +84,14 @@ export class FridgeFoodsService {
 
   async deleteFood({ foodId, userId }) {
     // user의 냉장고음식인지 check
+    /*
     const fridge = await this.fridgesService.findOne(userId);
 
-    if (userId !== fridge.user.id) {
+    console.log("=====",fridge)
+    if (userId !== fridge.user) {
       throw new UnprocessableEntityException('권한이 없습니다.');
     }
-
+    */
     const result = await this.fridgeFoodRepository.softDelete({ id: foodId });
     return result.affected ? true : false;
   }

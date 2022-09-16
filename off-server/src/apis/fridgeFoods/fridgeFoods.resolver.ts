@@ -69,10 +69,9 @@ export class FridgeFoodsResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Boolean)
   async deleteFridgeFood(
-    @Args('foodId') id: string, //
+    @Args('foodId') foodId: string, //
     @Context() context: IContext
     ){
-    const foodId = id
     const userId = context.req.user.id
     
     return await this.fridgeFoodsService.deleteFood({foodId, userId})
