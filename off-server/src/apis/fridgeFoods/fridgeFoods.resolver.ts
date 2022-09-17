@@ -38,6 +38,15 @@ export class FridgeFoodsResolver {
     return await this.fridgeFoodsService.findAll({userId, page, status}) 
   }
 
+  @UseGuards(GqlAuthAccessGuard)
+  @Query(() => FridgeFood)
+  async fetchFridgeFoodOne(
+    @Args('foodId') foodId: string, //
+    @Context() context: IContext,
+  ){
+    return await this.fridgeFoodsService.findOne({foodId})
+  }
+
   // 냉장고에 음식 등록하기
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => FridgeFood)
