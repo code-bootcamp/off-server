@@ -86,6 +86,7 @@ type Query {
   fetchBoard(id: String!): Board!
   fetchCategory: [Category!]!
   fetchFridgeFoods(page: Int, status: String): [FridgeFood!]!
+  fetchFridgeFoodOne(foodId: String!): FridgeFood!
   fetchUsers: [User!]!
   fetchUserLoggedIn: User!
   fetchUserWithDeleted: [User!]!

@@ -56,6 +56,16 @@ export class FridgeFoodsService {
     return result;
   }
 
+  async findOne({foodId}){
+    const result = await this.fridgeFoodRepository.findOne({
+      where: {id: foodId},
+      relations: ['category']
+    })
+
+    // console.log("=========",result)
+    return result;
+  }
+
   async createFood({ fridgeFoodInput, userId, status }) {
     // user의 냉장고 번호 찾기
     const myFridge = await this.fridgesService.findOne({ userId });
