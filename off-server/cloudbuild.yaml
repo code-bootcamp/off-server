@@ -1,16 +1,18 @@
 steps:
   - name: docker/compose:1.29.0
     args:
-      - off-server/docker-compose.yaml
+      - -f
+      - f8b4-team07-server/off-server/docker-compose.yaml
       - build
 
   - name: docker/compose:1.29.0
     args:
-      - off-server/docker-compose.yaml
+      - -f
+      - f8b4-team07-server/off-server/docker-compose.yaml
       - push
 
   - name: docker/compose:1.29.0
     args:
-      - off-server/docker-compose.yaml
+      - -f
+      - f8b4-team07-server/off-server/docker-compose.yaml
       - up
-      
