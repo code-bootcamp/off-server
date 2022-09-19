@@ -55,6 +55,20 @@ enum BOARD_STATUS_ENUM {
   RESERVATION
 }
 
+type OrderHistory {
+  id: String!
+  orderDate: DateTime!
+  user: User!
+  board: Board!
+}
+
+type SalesHistory {
+  id: String!
+  salesDate: DateTime!
+  user: User!
+  board: Board!
+}
+
 type Fridge {
   id: String!
   user: User!
@@ -87,6 +101,8 @@ type Query {
   fetchCategory: [Category!]!
   fetchFridgeFoods(page: Int, status: String): [FridgeFood!]!
   fetchFridgeFoodOne(foodId: String!): FridgeFood!
+  fetchOrderHistory: [OrderHistory!]!
+  fetchSalseHistory: [SalesHistory!]!
   fetchUsers: [User!]!
   fetchUserLoggedIn: User!
   fetchUserWithDeleted: [User!]!
