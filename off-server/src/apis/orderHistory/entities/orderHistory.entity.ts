@@ -4,9 +4,11 @@ import { User } from 'src/apis/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -16,13 +18,9 @@ export class OrderHistory {
   @Field(() => String)
   id: string;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   @Field(() => Date)
   orderDate: Date;
-
-  @Column()
-  @Field(() => Int)
-  price: number;
 
   @ManyToOne(() => User)
   @Field(() => User)
@@ -31,4 +29,7 @@ export class OrderHistory {
   @ManyToOne(() => Board)
   @Field(() => Board)
   board: Board;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

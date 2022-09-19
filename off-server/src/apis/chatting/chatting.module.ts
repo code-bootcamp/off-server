@@ -16,6 +16,10 @@ import {
 } from '@nestjs/elasticsearch';
 import { UsersService } from '../users/users.service';
 import { UsersImage } from '../usersImages/entities/usersImage.entity';
+import { OrderHistoryService } from '../orderHistory/orderHistory.service';
+import { SalesHistoryService } from '../salesHistory/salesHistory.service';
+import { OrderHistory } from '../orderHistory/entities/orderHistory.entity';
+import { SalesHistory } from '../salesHistory/entities/salesHistory.entity';
 
 @Module({
   imports: [
@@ -27,6 +31,8 @@ import { UsersImage } from '../usersImages/entities/usersImage.entity';
       BoardsImage,
       ChatRoom,
       UsersImage,
+      OrderHistory,
+      SalesHistory,
     ]),
     ElasticsearchModule.register({
       node: 'http://elasticsearch:9200',
@@ -37,7 +43,9 @@ import { UsersImage } from '../usersImages/entities/usersImage.entity';
     ChattingService,
     BoardsService,
     ChatRoomService,
-    UsersService
+    UsersService,
+    OrderHistoryService,
+    SalesHistoryService
   ]
 })
 export class ChattingModule {}

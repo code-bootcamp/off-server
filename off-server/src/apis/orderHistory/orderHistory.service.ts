@@ -10,11 +10,20 @@ export class OrderHistoryService {
     private readonly orderHistoryRepository: Repository<OrderHistory>
   ){}
 
-  async create({userId, boardId, price}){
+  async find({boardId}){
+    return await this.orderHistoryRepository.findOne({
+      where: {board: {id: boardId}}
+    })
+  }
+
+  async create({userId, boardId}){
     await this.orderHistoryRepository.save({
       user: userId,
       board: boardId,
-      price
     })
+  }
+
+  async delete({boardId}){
+    return await this.orderHistoryRepository.softDelete({board: {id: boardId}})
   }
 }

@@ -103,7 +103,9 @@ type Mutation {
   restoreAccessToken: String!
   createBoard(createBoardInput: CreateBoardInput!): Board!
   updateBoard(boardId: String!, updateBoardInput: UpdateBoardInput!): Board!
+  createReservation(boardId: String!, buyer: String!): Boolean!
   deleteBoard(boardId: String!): Boolean!
+  deleteReservation(boardId: String!): Boolean!
   uploadFile(files: [Upload!]!): [String!]!
   createCategory(name: String!): Category!
   createFridgeFood(fridgeFoodInput: CreateFridgeFoodInput!, status: String!): FridgeFood!

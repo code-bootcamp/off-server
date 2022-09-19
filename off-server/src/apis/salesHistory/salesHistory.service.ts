@@ -10,11 +10,14 @@ export class SalesHistoryService {
     private readonly salesHistoryRepository: Repository<SalesHistory>
   ){}
 
-  async create({userId, boardId, price}){
+  async create({userId, boardId}){
     await this.salesHistoryRepository.save({
       user: userId,
-      board: boardId,
-      price
+      board: boardId
     })
+  }
+
+  async delete({boardId}){
+    return await this.salesHistoryRepository.softDelete({board: {id: boardId}})
   }
 }

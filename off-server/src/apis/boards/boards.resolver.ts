@@ -71,11 +71,31 @@ export class BoardsResolver {
 
   @UseGuards(GqlAuthAccessGuard)
   @Mutation(() => Boolean)
+  async createReservation(
+    @Context() context: IContext,
+    @Args('boardId') boardId: string,
+    @Args('buyer') buyer: string, 
+  ){
+    const userId = context.req.user.id;
+    return await this.boardsService.createReserve({boardId, userId, buyer})
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Boolean)
   async deleteBoard(
     @Context() context: IContext,
     @Args('boardId') boardId: string,
   ) {
     const userId = context.req.user.id;
     return await this.boardsService.delete({ boardId, userId });
+  }
+
+  @UseGuards(GqlAuthAccessGuard)
+  @Mutation(() => Boolean)
+  async deleteReservation(
+    @Context() context: IContext,
+    @Args('boardId') boardId: string,
+  ){
+    return await this.boardsService.deleteReserve({boardId})
   }
 }

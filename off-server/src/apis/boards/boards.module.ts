@@ -10,6 +10,10 @@ import { BoardsService } from './boards.service';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
 import { Board } from './entities/board.entity';
+import { OrderHistoryService } from '../orderHistory/orderHistory.service';
+import { SalesHistoryService } from '../salesHistory/salesHistory.service';
+import { OrderHistory } from '../orderHistory/entities/orderHistory.entity';
+import { SalesHistory } from '../salesHistory/entities/salesHistory.entity';
 
 @Module({
   imports: [
@@ -19,11 +23,18 @@ import { Board } from './entities/board.entity';
       Category,
       SalesLocations,
       BoardsImage,
+      OrderHistory,
+      SalesHistory,
     ]),
     ElasticsearchModule.register({
       node: 'http://elasticsearch:9200',
     }),
   ],
-  providers: [BoardsResolver, BoardsService],
+  providers: [
+    BoardsResolver, 
+    BoardsService,
+    OrderHistoryService,
+    SalesHistoryService,
+  ],
 })
 export class BoardsModule {}
