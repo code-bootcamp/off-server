@@ -1,8 +1,6 @@
 version: '3.7'
 services:
   my-backend:
-    image: asia.gcr.io/off-service/my-backend:1.1
-    platform: linux/x86_64
     build:
       context: .
       dockerfile: Dockerfile
@@ -38,13 +36,5 @@ services:
     volumes:
       - ./elk/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./elk/logstash/mysql-connector-java-8.0.28.jar:/usr/share/logstash/mysql-connector-java-8.0.28.jar
-      # - ./elk/logstash/elasticsearch.json:/usr/share/logstash/elasticsearch.json
       - ./elk/logstash/template.json:/usr/share/logstash/template.json
 
-  # kibana:
-  #   image: kibana:7.17.0
-  #   environment:
-  #     ELASTICSERCH_UTL: http://elasticsearch:9200
-  #     ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-  #   ports:
-  #     - 5601:5601

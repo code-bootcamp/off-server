@@ -16,6 +16,13 @@ export class OrderHistoryService {
     })
   }
 
+  async findAll({userId}){
+    return await this.orderHistoryRepository.find({
+      where: {user: {id: userId}},
+      relations: ['board'],
+    })
+  }
+
   async create({userId, boardId}){
     await this.orderHistoryRepository.save({
       user: userId,
