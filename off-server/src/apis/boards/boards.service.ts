@@ -5,12 +5,15 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { BoardsImage } from '../boardsImages/entities/boardsImage.entity';
 import { SalesLocations } from '../salesLocations/entities/salesLocation.entity';
 import { Board, Board_STATUS_ENUM } from './entities/board.entity';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Cache } from 'cache-manager';
+import { OrderHistory } from '../orderHistory/entities/orderHistory.entity';
+import { OrderHistoryService } from '../orderHistory/orderHistory.service';
+import { SalesHistoryService } from '../salesHistory/salesHistory.service';
 
 @Injectable()
 export class BoardsService {
@@ -24,6 +27,9 @@ export class BoardsService {
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
     private readonly elasticsearchService: ElasticsearchService,
+    private readonly orderHistoryService: OrderHistoryService, 
+    private readonly salesHistoryService: SalesHistoryService, 
+    private readonly connection: DataSource,
   ) {}
 
   async elasticsearchTitle({ title }) {
@@ -123,6 +129,33 @@ export class BoardsService {
     return saveBoard;
   }
 
+  async createReserve({boardId, userId, buyer}){
+    try{
+      const myBoard = await this.boardRepository.findOne({
+        where: {id: boardId},
+        relations: ['user']
+      })
+
+      if (userId !== myBoard.user.id) {
+        await this.orderHistoryService.create({userId, boardId})
+        await this.salesHistoryService.create({userId: myBoard.user.id, boardId})
+      } else {
+        await this.orderHistoryService.create({userId: buyer, boardId})
+        await this.salesHistoryService.create({userId, boardId})
+      }
+  
+      await this.boardRepository.save({
+        ...myBoard,
+        status: Board_STATUS_ENUM.RESERVATION
+      })
+
+      return true;
+    } catch(error) {
+      console.log("error!!!",error)
+      return false;
+    }
+  }
+
   async update({ updateBoardInput, userId, boardId, status }) {
     const myboard = await this.boardRepository.findOne({
       where: { id: boardId },
@@ -159,5 +192,18 @@ export class BoardsService {
     }
     const result = await this.boardRepository.softDelete({ id: boardId });
     return result.affected ? true : false;
+  }
+
+  async deleteReserve({boardId}){
+    // const orderId = await this.orderHistoryService.find({boardId})
+    const order = await this.orderHistoryService.delete({boardId})
+    const sales = await this.salesHistoryService.delete({boardId})
+
+    await this.boardRepository.save({
+      id: boardId,
+      status: Board_STATUS_ENUM.SALE
+    })
+
+    return order.affected && sales.affected ? true : false;
   }
 }
