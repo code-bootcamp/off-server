@@ -46,6 +46,7 @@ type Board {
   regDate: DateTime!
   user: User!
   category: Category!
+  boardImage: [BoardsImage!]!
   deletedAt: String!
 }
 
@@ -53,6 +54,12 @@ enum BOARD_STATUS_ENUM {
   SALE
   SOLDOUT
   RESERVATION
+}
+
+type BoardsImage {
+  id: String!
+  url: String!
+  board: Board!
 }
 
 type OrderHistory {
