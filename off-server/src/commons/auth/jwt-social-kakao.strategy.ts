@@ -6,7 +6,7 @@ export class JwtKakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     super({
       clientID: process.env.KAKAO_CLIENTID,
       clientSecret: process.env.KAKAO_CLIENTSECRET,
-      callbackURL: 'http://localhost:3000/login/kakao',
+      callbackURL: 'http://localhost:3000',
       scope: ['account_email', 'profile_nickname'],
     });
   }
@@ -21,7 +21,7 @@ export class JwtKakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
       password: '31412345',
       name: profile.displayName,
       nickname: profile.displayName,
-      phone: "01000000000"
+      phone: '01000000000',
     };
   }
 }
