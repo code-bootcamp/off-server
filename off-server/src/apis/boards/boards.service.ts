@@ -15,6 +15,7 @@ import { OrderHistory } from '../orderHistory/entities/orderHistory.entity';
 import { OrderHistoryService } from '../orderHistory/orderHistory.service';
 import { SalesHistoryService } from '../salesHistory/salesHistory.service';
 import { url } from 'inspector';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class BoardsService {
@@ -25,6 +26,8 @@ export class BoardsService {
     private readonly salesLocationRepository: Repository<SalesLocations>,
     @InjectRepository(BoardsImage)
     private readonly boardsImageRepository: Repository<BoardsImage>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
     private readonly elasticsearchService: ElasticsearchService,
@@ -99,10 +102,18 @@ export class BoardsService {
   }
 
   async findOne({ id }) {
-    return await this.boardRepository.findOne({
+    const board = await this.boardRepository.findOne({
+      // board
       where: { id: id },
       relations: ['category', 'user', 'salesLocation', 'boardImage'],
     });
+    const user = await this.userRepository.findOne({
+      //user
+      where: { id: board.user.id },
+      relations: ['usersimage'],
+    });
+    board.user.usersimage = user.usersimage;
+    return board;
   }
 
   async create({ createBoardInput, userId }) {
