@@ -13,7 +13,7 @@ export class BoardsImage {
   @Field(() => String)
   url: string;
 
-  @ManyToOne(() => Board)
+  @ManyToOne(() => Board, (board) => board.boardImage)
   @Field(() => Board)
   board: Board;
 }

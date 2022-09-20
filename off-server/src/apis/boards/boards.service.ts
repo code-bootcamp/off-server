@@ -14,6 +14,7 @@ import { Cache } from 'cache-manager';
 import { OrderHistory } from '../orderHistory/entities/orderHistory.entity';
 import { OrderHistoryService } from '../orderHistory/orderHistory.service';
 import { SalesHistoryService } from '../salesHistory/salesHistory.service';
+import { url } from 'inspector';
 
 @Injectable()
 export class BoardsService {
@@ -27,8 +28,8 @@ export class BoardsService {
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
     private readonly elasticsearchService: ElasticsearchService,
-    private readonly orderHistoryService: OrderHistoryService, 
-    private readonly salesHistoryService: SalesHistoryService, 
+    private readonly orderHistoryService: OrderHistoryService,
+    private readonly salesHistoryService: SalesHistoryService,
     private readonly connection: DataSource,
   ) {}
 
@@ -93,14 +94,14 @@ export class BoardsService {
 
   async findAll() {
     return await this.boardRepository.find({
-      relations: ['category', 'user', 'salesLocation'],
+      relations: ['category', 'user', 'salesLocation', 'boardImage'],
     });
   }
 
   async findOne({ id }) {
     return await this.boardRepository.findOne({
       where: { id: id },
-      relations: ['category', 'user', 'salesLocation'],
+      relations: ['category', 'user', 'salesLocation', 'boardImage'],
     });
   }
 
@@ -129,29 +130,32 @@ export class BoardsService {
     return saveBoard;
   }
 
-  async createReserve({boardId, userId, buyer}){
-    try{
+  async createReserve({ boardId, userId, buyer }) {
+    try {
       const myBoard = await this.boardRepository.findOne({
-        where: {id: boardId},
-        relations: ['user']
-      })
+        where: { id: boardId },
+        relations: ['user'],
+      });
 
       if (userId !== myBoard.user.id) {
-        await this.orderHistoryService.create({userId, boardId})
-        await this.salesHistoryService.create({userId: myBoard.user.id, boardId})
+        await this.orderHistoryService.create({ userId, boardId });
+        await this.salesHistoryService.create({
+          userId: myBoard.user.id,
+          boardId,
+        });
       } else {
-        await this.orderHistoryService.create({userId: buyer, boardId})
-        await this.salesHistoryService.create({userId, boardId})
+        await this.orderHistoryService.create({ userId: buyer, boardId });
+        await this.salesHistoryService.create({ userId, boardId });
       }
-  
+
       await this.boardRepository.save({
         ...myBoard,
-        status: Board_STATUS_ENUM.RESERVATION
-      })
+        status: Board_STATUS_ENUM.RESERVATION,
+      });
 
       return true;
-    } catch(error) {
-      console.log("error!!!",error)
+    } catch (error) {
+      console.log('error!!!', error);
       return false;
     }
   }
@@ -194,15 +198,15 @@ export class BoardsService {
     return result.affected ? true : false;
   }
 
-  async deleteReserve({boardId}){
+  async deleteReserve({ boardId }) {
     // const orderId = await this.orderHistoryService.find({boardId})
-    const order = await this.orderHistoryService.delete({boardId})
-    const sales = await this.salesHistoryService.delete({boardId})
+    const order = await this.orderHistoryService.delete({ boardId });
+    const sales = await this.salesHistoryService.delete({ boardId });
 
     await this.boardRepository.save({
       id: boardId,
-      status: Board_STATUS_ENUM.SALE
-    })
+      status: Board_STATUS_ENUM.SALE,
+    });
 
     return order.affected && sales.affected ? true : false;
   }

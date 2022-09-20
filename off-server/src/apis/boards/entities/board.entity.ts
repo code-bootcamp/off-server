@@ -66,6 +66,10 @@ export class Board {
   @Field(() => Category)
   category: Category;
 
+  @OneToMany(() => BoardsImage, (boardImage) => boardImage.board)
+  @Field(() => [BoardsImage])
+  boardImage: BoardsImage[];
+
   @DeleteDateColumn()
   @Field(() => String)
   deletedAt: Date;
