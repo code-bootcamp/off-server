@@ -23,9 +23,9 @@ export class ChattingResolver {
   @UseGuards(GqlAuthAccessGuard)
   @Query(() => [Chat])
   async fetchChatHistory(
-    @Args('chatRoodId') chatRoodId: string, //
+    @Args('chatRoomId') chatRoomId: string, //
   ){
-    return await this.chattingService.findBoardChat({chatRoodId})
+    return await this.chattingService.findBoardChat({chatRoomId})
   }
 
 }
