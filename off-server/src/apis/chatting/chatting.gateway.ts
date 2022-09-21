@@ -16,8 +16,9 @@ import { ChattingService } from './chatting.service';
 @WebSocketGateway({
   namespace: 'chat',
   cors: {
-    origin: '*'
-  },
+    origin: '*',
+    credentials: true,
+  }, 
 })
 
 export class ChatGateway {

@@ -116,7 +116,7 @@ type Query {
   fetchBoard(id: String!): Board!
   fetchCategory: [Category!]!
   fetchMyChattingList: [Chat!]!
-  fetchChatHistory(chatRoodId: String!): [Chat!]!
+  fetchChatHistory(chatRoomId: String!): [Chat!]!
   fetchFridgeFoods(page: Int, status: String): [FridgeFood!]!
   fetchFridgeFoodOne(foodId: String!): FridgeFood!
   fetchOrderHistory: [OrderHistory!]!

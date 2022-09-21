@@ -31,9 +31,9 @@ export class ChattingService {
     return result;
   }
 
-  async findBoardChat( {chatRoodId} ) {
+  async findBoardChat( {chatRoomId} ) {
     const result = await this.chatRepository.find({
-      where: {chatRoomId: chatRoodId},
+      where: {chatRoomId: chatRoomId},
       relations: ['user']
     })
     return result;
