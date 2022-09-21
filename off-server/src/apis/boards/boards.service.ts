@@ -94,6 +94,32 @@ export class BoardsService {
     // result[0]['expdate'] = new Date(result[0]['expdate']);
     return data;
   }
+  async elasticsearch({ title, category, location }) {
+    const data = await this.elasticsearchService.search({
+      index: 'off',
+      query: {
+        bool: {
+          must: [
+            {
+              match: { title: title },
+            },
+            {
+              match: { categoryname: category },
+            },
+            {
+              multi_match: {
+                operator: 'AND',
+                query: location,
+                type: 'cross_fields',
+                fields: ['address', 'detail'],
+              },
+            },
+          ],
+        },
+      },
+    });
+    return data;
+  }
 
   async findAll() {
     return await this.boardRepository.find({

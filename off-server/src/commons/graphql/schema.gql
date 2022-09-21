@@ -103,6 +103,7 @@ type Query {
   fetchBoardTitle(title: String): JSONObject!
   fetchBoardCategory(category: String): JSONObject!
   fetchBoardLocation(location: String): JSONObject!
+  fetchBoardSearch(title: String, category: String, location: String): JSONObject!
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
   fetchCategory: [Category!]!
