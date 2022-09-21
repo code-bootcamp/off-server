@@ -118,7 +118,7 @@ export class BoardsService {
         },
       },
     });
-    return data;
+    return data.hits.hits[0];
   }
 
   async findAll() {
