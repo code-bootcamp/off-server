@@ -1,23 +1,41 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { Board } from "../boards/entities/board.entity";
 import { Chat } from "./entities/chat.entity";
 
 @Injectable()
 export class ChattingService {
   constructor(
     @InjectRepository(Chat)
-    private readonly chatRepository: Repository<Chat>,
+    private readonly chatRepository: Repository<Chat>
   ){}
 
   
   async findMyChatList({ userId }){
-    const result = await this.chatRepository.find({where: userId})
+    const result = await this.chatRepository.find({
+      where: { user: {id: userId},},
+      order: {createAt: 'DESC'},
+    })
+  
+    await Promise.all(
+      result.map(async (el) => {
+      const chat = await this.chatRepository.findOne({
+        where: {chatRoomId: el.chatRoomId},
+        order: {createAt: 'DESC'},
+      })
+     return el.message = chat.message
+    })
+    )
+
     return result;
   }
 
-  async findBoardChat( {boardId} ) {
-    const result = await this.chatRepository.find({where: boardId})
+  async findBoardChat( {chatRoodId} ) {
+    const result = await this.chatRepository.find({
+      where: {chatRoomId: chatRoodId},
+      relations: ['user']
+    })
     return result;
   }
 

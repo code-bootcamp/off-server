@@ -99,6 +99,14 @@ enum FRIDGE_STATUS_ENUM {
   LIST
 }
 
+type Chat {
+  id: String!
+  message: String!
+  createAt: DateTime!
+  chatRoomId: String!
+  user: User!
+}
+
 type Query {
   fetchBoardTitle(title: String): JSONObject!
   fetchBoardCategory(category: String): JSONObject!
@@ -107,6 +115,8 @@ type Query {
   fetchBoards: [Board!]!
   fetchBoard(id: String!): Board!
   fetchCategory: [Category!]!
+  fetchMyChattingList: [Chat!]!
+  fetchChatHistory(chatRoodId: String!): [Chat!]!
   fetchFridgeFoods(page: Int, status: String): [FridgeFood!]!
   fetchFridgeFoodOne(foodId: String!): FridgeFood!
   fetchOrderHistory: [OrderHistory!]!

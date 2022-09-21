@@ -20,6 +20,7 @@ import { OrderHistoryService } from '../orderHistory/orderHistory.service';
 import { SalesHistoryService } from '../salesHistory/salesHistory.service';
 import { OrderHistory } from '../orderHistory/entities/orderHistory.entity';
 import { SalesHistory } from '../salesHistory/entities/salesHistory.entity';
+import { ChattingResolver } from './chatting.resolver';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { SalesHistory } from '../salesHistory/entities/salesHistory.entity';
     ChatRoomService,
     UsersService,
     OrderHistoryService,
-    SalesHistoryService
+    SalesHistoryService,
+    ChattingResolver,
   ]
 })
 export class ChattingModule {}

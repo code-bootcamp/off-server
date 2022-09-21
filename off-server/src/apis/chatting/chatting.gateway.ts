@@ -37,14 +37,10 @@ export class ChatGateway {
   async connectSomeone(
     @MessageBody() data: string, //
     @ConnectedSocket() client, 
-    // @Context() context: IContext,
     ) {
     const [nickname, room, boardId] = data;
 
     if (nickname !== null) {
-      // const userid = context.req.user.id
-      // console.log(userid)
-      // const boardId = room.split(":")[0]
 
       const user = await this.usersService.findUserId(nickname)
       
