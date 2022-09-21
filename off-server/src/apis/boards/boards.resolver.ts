@@ -30,6 +30,14 @@ export class BoardsResolver {
   ) {
     return this.boardsService.elasticsearchLocation({ location });
   }
+  @Query(() => GraphQLJSONObject)
+  async fetchBoardSearch(
+    @Args({ name: 'title', nullable: true }) title: string,
+    @Args({ name: 'category', nullable: true }) category: string,
+    @Args({ name: 'location', nullable: true }) location: string,
+  ) {
+    return this.boardsService.elasticsearch({ title, category, location });
+  }
 
   @Query(() => [Board])
   fetchBoards() {
@@ -74,10 +82,10 @@ export class BoardsResolver {
   async createReservation(
     @Context() context: IContext,
     @Args('boardId') boardId: string,
-    @Args('buyer') buyer: string, 
-  ){
+    @Args('buyer') buyer: string,
+  ) {
     const userId = context.req.user.id;
-    return await this.boardsService.createReserve({boardId, userId, buyer})
+    return await this.boardsService.createReserve({ boardId, userId, buyer });
   }
 
   @UseGuards(GqlAuthAccessGuard)
@@ -95,7 +103,7 @@ export class BoardsResolver {
   async deleteReservation(
     @Context() context: IContext,
     @Args('boardId') boardId: string,
-  ){
-    return await this.boardsService.deleteReserve({boardId})
+  ) {
+    return await this.boardsService.deleteReserve({ boardId });
   }
 }
