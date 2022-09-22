@@ -34,6 +34,7 @@ import { ChattingResolver } from './chatting.resolver';
       UsersImage,
       OrderHistory,
       SalesHistory,
+      ChatRoom,
     ]),
     ElasticsearchModule.register({
       node: 'http://elasticsearch:9200',
