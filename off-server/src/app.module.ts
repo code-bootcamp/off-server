@@ -46,8 +46,9 @@ import { ChatRoom } from './apis/chatRoom/entities/chatRoom.entity';
         origin: [
           'http://localhost:3000',
           'http://127.0.0.1:5500',
-          'http://freshfridge.shop:3000',
+          'https://freshfridge.site:8080',
           'https://freshfridge.shop',
+          'https://freshfridge.site',
         ],
         credentials: true,
       },
