@@ -4,6 +4,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { GqlAuthAccessGuard } from "src/commons/auth/gql-auth.guard";
 import { IContext } from "src/commons/type/context";
 import { ChattingService } from "./chatting.service";
+import { ChatOutput } from "./dto/chat.output";
 import { Chat } from "./entities/chat.entity";
 
 @Resolver()
@@ -13,7 +14,7 @@ export class ChattingResolver {
   ){}
 
   @UseGuards(GqlAuthAccessGuard)
-  @Query(() => [Chat])
+  @Query(() => [ChatOutput])
   async fetchMyChattingList(
     @Context() context: IContext, //
   ){
