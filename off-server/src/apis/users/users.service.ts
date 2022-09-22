@@ -102,11 +102,15 @@ export class UsersService {
 
     let hashedPassword: string; 
     password ? hashedPassword = await bcrypt.hash(password, 10) : hashedPassword = user.password
+    
+    let usersimage:UsersImage
 
-    const usersimage = await this.usersImageRepository.save({
-      url: image,
-      user
-    })
+    if (image) {
+      usersimage = await this.usersImageRepository.save({
+        url: image,
+        user
+      })
+    }
 
     const result = await this.userRepository.save({
       id: user.id,

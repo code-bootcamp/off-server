@@ -4,5 +4,5 @@ import { CreateUserInput } from './createUser.input';
 @InputType()
 export class updateUserInput extends PartialType(CreateUserInput) {
   @Field(() => String, { nullable: true })
-  image: string;
+  image?: string;
 }
